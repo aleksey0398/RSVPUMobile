@@ -25,7 +25,7 @@ import me.relex.circleindicator.CircleIndicator;
 import ru.rsvpu.mobile.Fragments.FragmentPage;
 import ru.rsvpu.mobile.MainActivity;
 import ru.rsvpu.mobile.R;
-import ru.rsvpu.mobile.Utils.PresentationViewPager;
+import ru.rsvpu.mobile.CustomView.PresentationViewPager;
 
 import static java.lang.Thread.sleep;
 
@@ -63,7 +63,7 @@ public class TutorialActivity extends AppCompatActivity {
 
         new Thread(() -> {
             try {
-                sleep(4000);
+                sleep(3500);
             } catch (InterruptedException e) {
                 e.printStackTrace();
             }

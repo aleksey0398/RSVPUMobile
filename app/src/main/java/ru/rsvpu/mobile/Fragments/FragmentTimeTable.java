@@ -31,7 +31,7 @@ import java.util.List;
 
 import ru.rsvpu.mobile.Adapters.RVAdapterTimeTable;
 import ru.rsvpu.mobile.R;
-import ru.rsvpu.mobile.Utils.myLinearLayoutManager;
+import ru.rsvpu.mobile.CustomView.myLinearLayoutManager;
 import ru.rsvpu.mobile.items.Container;
 import ru.rsvpu.mobile.items.DateUtil;
 import ru.rsvpu.mobile.items.SettingsHelper;
@@ -149,7 +149,7 @@ public class FragmentTimeTable extends Fragment {
 
             network = myNetwork.isWorking(getActivity());
             if(network){
-                urlValid = myNetwork.checkURL(generateRequest());
+                urlValid = myNetwork.checkURL();
             }
 
             if (network && urlValid)  {

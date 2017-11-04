@@ -346,7 +346,7 @@ public class FragmentSettings extends Fragment {
             BufferedReader reader;
 
             network = myNetwork.isWorking(getActivity());
-            urlValid = myNetwork.checkURL(var.url + (selectedType != 0 ? "getAllZaochnoe" : "getAllOchnoe"));
+            urlValid = myNetwork.checkURL();
             if (network && urlValid) {
                 try {
                     URL url = new URL(var.url + (selectedType != 0 ? "getAllZaochnoe" : "getAllOchnoe"));

@@ -1,4 +1,4 @@
-package ru.rsvpu.mobile.Utils;
+package ru.rsvpu.mobile.CustomView;
 
 import android.content.Context;
 import android.graphics.PointF;

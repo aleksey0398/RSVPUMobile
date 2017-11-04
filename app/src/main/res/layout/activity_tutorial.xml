@@ -32,12 +32,12 @@
         android:textColor="@color/ic_status_light_gray"
         android:textStyle="bold" />
 
-    <ru.rsvpu.mobile.Utils.PresentationViewPager
+    <ru.rsvpu.mobile.CustomView.PresentationViewPager
         android:id="@+id/activity_viewPager_slide"
         android:layout_width="match_parent"
         android:layout_height="350dp">
 
-    </ru.rsvpu.mobile.Utils.PresentationViewPager>
+    </ru.rsvpu.mobile.CustomView.PresentationViewPager>
 
     <me.relex.circleindicator.CircleIndicator
         android:id="@+id/activity_tutorial_circle"

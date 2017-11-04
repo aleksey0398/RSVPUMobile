@@ -9,16 +9,20 @@ import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v7.app.AppCompatActivity;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 
 import com.vk.sdk.VKSdk;
+import com.vk.sdk.api.VKApi;
+import com.vk.sdk.api.VKRequest;
 
 import ru.rsvpu.mobile.Activity.TutorialActivity;
 import ru.rsvpu.mobile.Fragments.FragmentAds;
 import ru.rsvpu.mobile.Fragments.FragmentNews;
 import ru.rsvpu.mobile.Fragments.FragmentSettings;
 import ru.rsvpu.mobile.Fragments.FragmentTimeTable;
+import ru.rsvpu.mobile.Services.SendToServerService;
 import ru.rsvpu.mobile.items.Container;
 import ru.rsvpu.mobile.items.SettingsHelper;
 import ru.rsvpu.mobile.items.var;
@@ -30,6 +34,7 @@ public class MainActivity extends AppCompatActivity {
     Fragment fragments[] = {new FragmentTimeTable(), new FragmentNews(), new FragmentAds(), new FragmentSettings()};
     String currentFragment = "one";
     int transition = FragmentTransaction.TRANSIT_FRAGMENT_FADE;
+    private final String LOG_ARGS = "Main_Activity";
 
     @Override
     protected void onStart() {
@@ -49,9 +54,7 @@ public class MainActivity extends AppCompatActivity {
             startActivity(new Intent(this, TutorialActivity.class));
             finish();
         }
-
-//        VKSdk.logout();
-
+//        startService(new Intent(this,SendToServerService.class));
         setContentView(R.layout.activity_main);
         fragmentManager = getSupportFragmentManager();
 
@@ -66,7 +69,7 @@ public class MainActivity extends AppCompatActivity {
             navigationView.setSelectedItemId(R.id.menu_navigation_setting);
             currentFragment = "four";
             fragmentManager.beginTransaction().add(R.id.main_container, fragments[3], "four").setTransition(transition).commit();
-
+            startService(new Intent(this, SendToServerService.class));
         } else {
             transaction.add(R.id.main_container, fragments[0], "one").commit();
         }

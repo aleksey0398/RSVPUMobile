@@ -14,13 +14,13 @@ import java.net.URL;
 
 public class myNetwork {
 
-    public static boolean checkURL(String URLName) {
+    public static boolean checkURL() {
 
         try {
             HttpURLConnection.setFollowRedirects(false);
-            HttpURLConnection con = (HttpURLConnection) new URL(URLName).openConnection();
-            con.setConnectTimeout(2000);
-            con.setReadTimeout(2000);
+            HttpURLConnection con = (HttpURLConnection) new URL(var.url+"checkURL").openConnection();
+            con.setConnectTimeout(1000);
+            con.setReadTimeout(1000);
             con.setRequestMethod("HEAD");
             return (con.getResponseCode() == HttpURLConnection.HTTP_OK);
         } catch (Exception e) {
