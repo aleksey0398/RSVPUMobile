@@ -53,12 +53,13 @@ public class RVAdapterTimeTable extends RecyclerView.Adapter<RVAdapterTimeTable.
     public void onBindViewHolder(TimeTableViewHolder holder, int position) {
         TimeTableOneDay timeTable = lessons.get(position);
         holder.txt_date.setText(timeTable.dayOfTheWeek + " " + timeTable.date);
-        Log.d(LOG_ARGS,DateUtil.generateToday());
+//        Log.d(LOG_ARGS,DateUtil.generateToday());
         if(DateUtil.generateToday().equals(timeTable.date)){
             holder.txt_date.setTextColor(context.getResources().getColor(R.color.todayColor));
         } else {
             holder.txt_date.setTextColor(context.getResources().getColor(android.R.color.white));
         }
+
 
         holder.lesson1.setVisibility(VISIBLE);
         holder.lesson2.setVisibility(VISIBLE);
@@ -103,6 +104,7 @@ public class RVAdapterTimeTable extends RecyclerView.Adapter<RVAdapterTimeTable.
 
             if (lesson.lessonsName.size() < 2) {
 
+                setTypeColor(holder.txt_type[i*2],lesson.typeOfLesson.get(0));
                 holder.txt_type[i * 2].setText(lesson.typeOfLesson.get(0));
                 holder.txt_title[i * 2].setText(lesson.lessonsName.get(0));
 
@@ -126,6 +128,8 @@ public class RVAdapterTimeTable extends RecyclerView.Adapter<RVAdapterTimeTable.
 
                 holder.second_linear_layout[i].setVisibility(GONE);
             } else {
+                setTypeColor(holder.txt_type[i*2],lesson.typeOfLesson.get(0));
+                setTypeColor(holder.txt_type[i*2+1],lesson.typeOfLesson.get(1));
                 holder.txt_type[i * 2].setText(lesson.typeOfLesson.get(0));
                 holder.txt_type[i * 2 + 1].setText(lesson.typeOfLesson.get(1));
                 System.out.println(lesson.lessonsName.size());
@@ -144,11 +148,23 @@ public class RVAdapterTimeTable extends RecyclerView.Adapter<RVAdapterTimeTable.
                 holder.txt_class[i*2+1].setText(holder.txt_class[i*2+1].getText()+" "+ lesson.numberOfGroup.get(1));
 
             }
-//            System.out.println(lesson.lessonsName.size());
         }
 
     }
 
+    void setTypeColor(TextView text, String type){
+        switch (type){
+            case "лаб. работа":
+                text.setBackgroundColor(context.getResources().getColor(R.color.colorLaboratoryWork));
+                break;
+            case "практика":
+                text.setBackgroundColor(context.getResources().getColor(R.color.colorPractice));
+                break;
+            case "лекция":
+                text.setBackgroundColor(context.getResources().getColor(R.color.colorLectures));
+                break;
+        }
+    }
     @Override
     public int getItemCount() {
         return lessons.size();
@@ -162,7 +178,6 @@ public class RVAdapterTimeTable extends RecyclerView.Adapter<RVAdapterTimeTable.
         private TextView[] txt_teacher = new TextView[14];
         private TextView[] txt_title = new TextView[14];
         private TextView[] txt_time_first = new TextView[7];
-        private TextView[] txt_time_second = new TextView[7];
         private LinearLayout second_linear_layout[] = new LinearLayout[7];
 
         TimeTableViewHolder(View itemView) {
@@ -180,7 +195,6 @@ public class RVAdapterTimeTable extends RecyclerView.Adapter<RVAdapterTimeTable.
             txt_title[0] = lesson1.findViewById(R.id.lesson_txt_title);
             txt_title[1] = lesson1.findViewById(R.id.lesson_txt_title2);
             txt_time_first[0] = lesson1.findViewById(R.id.lesson_txt_time_first);
-            txt_time_second[0] = lesson1.findViewById(R.id.lesson_txt_time_second);
 
             lesson2 = itemView.findViewById(R.id.lesson2);
             txt_type[2] = lesson2.findViewById(R.id.lesson_txt_type);
@@ -193,7 +207,6 @@ public class RVAdapterTimeTable extends RecyclerView.Adapter<RVAdapterTimeTable.
             txt_title[2] = lesson2.findViewById(R.id.lesson_txt_title);
             txt_title[3] = lesson2.findViewById(R.id.lesson_txt_title2);
             txt_time_first[1] = lesson2.findViewById(R.id.lesson_txt_time_first);
-            txt_time_second[1] = lesson2.findViewById(R.id.lesson_txt_time_second);
 
             lesson3 = itemView.findViewById(R.id.lesson3);
             txt_type[4] = lesson3.findViewById(R.id.lesson_txt_type);
@@ -206,7 +219,6 @@ public class RVAdapterTimeTable extends RecyclerView.Adapter<RVAdapterTimeTable.
             txt_title[4] = lesson3.findViewById(R.id.lesson_txt_title);
             txt_title[5] = lesson3.findViewById(R.id.lesson_txt_title2);
             txt_time_first[2] = lesson3.findViewById(R.id.lesson_txt_time_first);
-            txt_time_second[2] = lesson3.findViewById(R.id.lesson_txt_time_second);
 
             lesson4 = itemView.findViewById(R.id.lesson4);
             txt_type[6] = lesson4.findViewById(R.id.lesson_txt_type);
@@ -219,7 +231,6 @@ public class RVAdapterTimeTable extends RecyclerView.Adapter<RVAdapterTimeTable.
             txt_title[6] = lesson4.findViewById(R.id.lesson_txt_title);
             txt_title[7] = lesson4.findViewById(R.id.lesson_txt_title2);
             txt_time_first[3] = lesson4.findViewById(R.id.lesson_txt_time_first);
-            txt_time_second[3] = lesson4.findViewById(R.id.lesson_txt_time_second);
 
             lesson5 = itemView.findViewById(R.id.lesson5);
             txt_type[8] = lesson5.findViewById(R.id.lesson_txt_type);
@@ -232,7 +243,7 @@ public class RVAdapterTimeTable extends RecyclerView.Adapter<RVAdapterTimeTable.
             txt_title[8] = lesson5.findViewById(R.id.lesson_txt_title);
             txt_title[9] = lesson5.findViewById(R.id.lesson_txt_title2);
             txt_time_first[4] = lesson5.findViewById(R.id.lesson_txt_time_first);
-            txt_time_second[4] = lesson5.findViewById(R.id.lesson_txt_time_second);
+
 
             lesson6 = itemView.findViewById(R.id.lesson6);
             txt_type[10] = lesson6.findViewById(R.id.lesson_txt_type);
@@ -245,7 +256,6 @@ public class RVAdapterTimeTable extends RecyclerView.Adapter<RVAdapterTimeTable.
             txt_title[10] = lesson6.findViewById(R.id.lesson_txt_title);
             txt_title[11] = lesson6.findViewById(R.id.lesson_txt_title2);
             txt_time_first[5] = lesson6.findViewById(R.id.lesson_txt_time_first);
-            txt_time_second[5] = lesson6.findViewById(R.id.lesson_txt_time_second);
 
             lesson7 = itemView.findViewById(R.id.lesson7);
             txt_type[12] = lesson7.findViewById(R.id.lesson_txt_type);
@@ -258,8 +268,6 @@ public class RVAdapterTimeTable extends RecyclerView.Adapter<RVAdapterTimeTable.
             txt_title[12] = lesson7.findViewById(R.id.lesson_txt_title);
             txt_title[13] = lesson7.findViewById(R.id.lesson_txt_title2);
             txt_time_first[6] = lesson7.findViewById(R.id.lesson_txt_time_first);
-            txt_time_second[6] = lesson7.findViewById(R.id.lesson_txt_time_second);
-
         }
     }
 }

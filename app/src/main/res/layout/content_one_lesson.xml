@@ -19,17 +19,8 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center_vertical|center_horizontal"
-            android:layout_marginBottom="10dp"
             android:text="8:00"
             android:textAppearance="@android:style/TextAppearance.Large" />
-
-        <TextView
-            android:id="@+id/lesson_txt_time_second"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center_vertical|center_horizontal"
-            android:layout_marginTop="10dp"
-            android:text="9:45" />
     </FrameLayout>
 
     <LinearLayout
@@ -42,6 +33,8 @@
 
         <TextView
             android:id="@+id/lesson_txt_type"
+            android:layout_margin="4dp"
+            android:textColor="@android:color/white"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="Лекция" />
@@ -108,6 +101,8 @@
 
             <TextView
                 android:id="@+id/lesson_txt_type2"
+                android:layout_margin="4dp"
+                android:textColor="@android:color/white"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="Лекция" />

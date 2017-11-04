@@ -13,4 +13,8 @@
 
     <color name="ic_status_light_gray">#e7e7e7</color>
     <color name="ic_status_light_gray_text">#767676</color>
+    
+    <color name="colorLectures">#53C000</color>
+    <color name="colorPractice">#E10000</color>
+    <color name="colorLaboratoryWork">#00B4BE</color>
 </resources>
