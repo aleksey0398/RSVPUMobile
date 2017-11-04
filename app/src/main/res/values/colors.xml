@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="colorPrimary">#00BECD</color>
+    <color name="colorPrimaryDark">#009eaf</color>
+    <color name="colorAccent">#00414B</color>
+    <color name="colorClock">#1eff0000</color>
+    <color name="todayColor">#fff78a</color>
+    <color name="backgroundLight">#dfdfdf</color>
+    <color name="background_material_light">#f1f1f1</color>
+
+    <color name="news">#daf3ff</color>
+    <color name="ads">#ffe7e6</color>
+
+    <color name="ic_status_light_gray">#e7e7e7</color>
+    <color name="ic_status_light_gray_text">#767676</color>
+</resources>

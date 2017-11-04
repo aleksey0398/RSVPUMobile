@@ -1,0 +1,80 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.v7.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    background="@color/colorPrimaryDark"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_margin="5dp"
+    app:cardCornerRadius="2dp"
+    app:cardElevation="4dp">
+
+    <FrameLayout
+        android:background="@color/colorPrimaryDark"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"/>
+
+        <LinearLayout
+
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:padding="1dp">
+
+
+            <TextView
+                android:id="@+id/tt_date"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@color/colorPrimaryDark"
+                android:gravity="center"
+                android:text="ПОНЕДЕЛЬНИК 16.10.2017"
+                android:textColor="@android:color/white"
+                android:textStyle="bold" />
+
+            <include
+                android:id="@+id/lesson1"
+                layout="@layout/content_one_lesson">
+
+            </include>
+
+            <include
+                android:id="@+id/lesson2"
+                layout="@layout/content_one_lesson">
+
+            </include>
+
+            <include
+                android:id="@+id/lesson3"
+                layout="@layout/content_one_lesson">
+
+            </include>
+
+            <include
+                android:id="@+id/lesson4"
+                layout="@layout/content_one_lesson">
+
+            </include>
+
+            <include
+                android:id="@+id/lesson5"
+                layout="@layout/content_one_lesson">
+
+            </include>
+
+            <include
+                android:id="@+id/lesson6"
+                layout="@layout/content_one_lesson">
+
+            </include>
+
+            <include
+                android:id="@+id/lesson7"
+                layout="@layout/content_one_lesson">
+
+            </include>
+
+        </LinearLayout>
+
+
+
+</android.support.v7.widget.CardView>
