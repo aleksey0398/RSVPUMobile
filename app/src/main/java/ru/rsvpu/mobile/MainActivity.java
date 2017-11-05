@@ -1,6 +1,8 @@
 package ru.rsvpu.mobile;
 
 import android.annotation.SuppressLint;
+import android.app.AlarmManager;
+import android.app.PendingIntent;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.design.internal.BottomNavigationItemView;
@@ -9,19 +11,19 @@ import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v7.app.AppCompatActivity;
-import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 
 import com.vk.sdk.VKSdk;
-import com.vk.sdk.api.VKApi;
-import com.vk.sdk.api.VKRequest;
+
+import java.util.Calendar;
 
 import ru.rsvpu.mobile.Activity.TutorialActivity;
 import ru.rsvpu.mobile.Fragments.FragmentAds;
 import ru.rsvpu.mobile.Fragments.FragmentNews;
 import ru.rsvpu.mobile.Fragments.FragmentSettings;
 import ru.rsvpu.mobile.Fragments.FragmentTimeTable;
+import ru.rsvpu.mobile.Services.AlarmReceiver;
 import ru.rsvpu.mobile.Services.SendToServerService;
 import ru.rsvpu.mobile.items.Container;
 import ru.rsvpu.mobile.items.SettingsHelper;
@@ -39,6 +41,7 @@ public class MainActivity extends AppCompatActivity {
     @Override
     protected void onStart() {
         super.onStart();
+
     }
 
     @Override
@@ -54,10 +57,9 @@ public class MainActivity extends AppCompatActivity {
             startActivity(new Intent(this, TutorialActivity.class));
             finish();
         }
-//        startService(new Intent(this,SendToServerService.class));
         setContentView(R.layout.activity_main);
-        fragmentManager = getSupportFragmentManager();
 
+        fragmentManager = getSupportFragmentManager();
         final FragmentTransaction transaction = fragmentManager.beginTransaction();
         transaction.setTransition(FragmentTransaction.TRANSIT_FRAGMENT_FADE);
 
@@ -65,7 +67,7 @@ public class MainActivity extends AppCompatActivity {
 
         BottomNavigationView navigationView = findViewById(R.id.bottom_navigation);
 
-        if(getIntent().getIntExtra("firstStart",-1)==1){
+        if (getIntent().getIntExtra("firstStart", -1) == 1) {
             navigationView.setSelectedItemId(R.id.menu_navigation_setting);
             currentFragment = "four";
             fragmentManager.beginTransaction().add(R.id.main_container, fragments[3], "four").setTransition(transition).commit();
@@ -76,12 +78,15 @@ public class MainActivity extends AppCompatActivity {
 
         navigationView.setOnNavigationItemSelectedListener(item -> {
 
-
             switch (item.getItemId()) {
                 case R.id.menu_navigation_time:
 
                     if (fragmentManager.findFragmentByTag("one") != null) {
                         fragmentManager.beginTransaction().show(fragmentManager.findFragmentByTag("one")).setTransition(transition).commit();
+                        if (var.changeGroup) {
+                            FragmentTimeTable fragmentTimeTable = (FragmentTimeTable) fragments[0];
+                            fragmentTimeTable.refreshTimeTable();
+                        }
                     } else {
                         fragmentManager.beginTransaction().add(R.id.main_container, fragments[0], "one").setTransition(transition).commit();
                     }
@@ -90,10 +95,7 @@ public class MainActivity extends AppCompatActivity {
                         fragmentManager.beginTransaction().hide(fragmentManager.findFragmentByTag(currentFragment)).setTransition(transition).commit();
                     }
                     currentFragment = "one";
-                    if (var.changeGroup) {
-                        FragmentTimeTable fragmentTimeTable = (FragmentTimeTable) fragments[0];
-                        fragmentTimeTable.refreshTimeTable();
-                    }
+
                     timeTableMenuItem = item;
                     break;
 
@@ -143,9 +145,9 @@ public class MainActivity extends AppCompatActivity {
 
             return true;
         });
-
-
     }
+
+
 
     @SuppressLint("RestrictedApi")
     void setTitleTimeTable() {

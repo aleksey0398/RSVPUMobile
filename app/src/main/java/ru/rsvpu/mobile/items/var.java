@@ -18,4 +18,6 @@ public class var {
     static final String SETTINGS_preview_value = "preview_value_time_table";
     static final String SETTINGS_attr = "attr_time_table";
     static final String SETTINGS_name = "name_time_table";
+    static final String SETTINGS_time_table = "save_time_table";
+    static final String SETTINGS_categries = "save_categories_time_table";
 }

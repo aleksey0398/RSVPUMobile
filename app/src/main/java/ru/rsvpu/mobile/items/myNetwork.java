@@ -19,8 +19,8 @@ public class myNetwork {
         try {
             HttpURLConnection.setFollowRedirects(false);
             HttpURLConnection con = (HttpURLConnection) new URL(var.url+"checkURL").openConnection();
-            con.setConnectTimeout(1000);
-            con.setReadTimeout(1000);
+            con.setConnectTimeout(5000);
+            con.setReadTimeout(5000);
             con.setRequestMethod("HEAD");
             return (con.getResponseCode() == HttpURLConnection.HTTP_OK);
         } catch (Exception e) {

@@ -71,11 +71,16 @@ public class RVAdapterNews extends RecyclerView.Adapter<RVAdapterNews.newsViewHo
 
                             @Override
                             public void onAnimationEnd(Animator animation) {
-                                holder.imageView.setVisibility(View.INVISIBLE);
-                                holder.imageView.setImageBitmap(picture);
-                                holder.imageView.setVisibility(View.VISIBLE);
-                                holder.imageView.animate().alpha(1f).setDuration(300).start();
-                                newsList.get(position).setPicture(picture);
+                                //05.11.17 ошибка неизвестного рода API 19
+                                try {
+                                    holder.imageView.setVisibility(View.INVISIBLE);
+                                    holder.imageView.setImageBitmap(picture);
+                                    holder.imageView.setVisibility(View.VISIBLE);
+                                    holder.imageView.animate().alpha(1f).setDuration(300).start();
+                                    newsList.get(position).setPicture(picture);
+                                } catch (Exception e) {
+                                    e.printStackTrace();
+                                }
 
                             }
 

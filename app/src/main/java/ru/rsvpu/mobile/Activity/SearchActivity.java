@@ -7,6 +7,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.text.Editable;
 import android.text.TextWatcher;
+import android.util.Log;
 import android.view.MenuItem;
 import android.widget.ArrayAdapter;
 import android.widget.EditText;
@@ -68,6 +69,9 @@ public class SearchActivity extends AppCompatActivity {
 //                Toast.makeText(getApplicationContext(), String.valueOf(s), Toast.LENGTH_SHORT).show();
                 if (count == 0) {
                     listViewUpdate(allList);
+                    searchedContainer.addAll(groupList);
+                    searchedContainer.addAll(teacherList);
+                    searchedContainer.addAll(classList);
                     return;
                 }
                 search(String.valueOf(s));
@@ -82,6 +86,7 @@ public class SearchActivity extends AppCompatActivity {
         listView.setOnItemClickListener((parent, view, position, id) -> {
 //            Toast.makeText(SearchActivity.this, String.valueOf(searchedContainer.get(position).getName()), Toast.LENGTH_SHORT).show();
             Intent resultIntent = new Intent();
+            Log.d(LOG_ARGS, String.valueOf(searchedContainer.size()) + " size list container");
             resultIntent.putExtra(argsResult, new Gson().toJson(searchedContainer.get(position)));
             setResult(RESULT_OK, resultIntent);
             finish();
@@ -90,7 +95,7 @@ public class SearchActivity extends AppCompatActivity {
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-        if(item.getItemId() == android.R.id.home){
+        if (item.getItemId() == android.R.id.home) {
             finish();
         }
         return super.onOptionsItemSelected(item);
@@ -111,7 +116,7 @@ public class SearchActivity extends AppCompatActivity {
     }
 
     void listViewUpdate(List<String> list) {
-        ArrayAdapter<String> adapterAll = new ArrayAdapter<>(getApplicationContext(),
+        ArrayAdapter<String> adapterAll = new ArrayAdapter<>(SearchActivity.this,
                 android.R.layout.simple_list_item_1, list);
 
         listView.setAdapter(adapterAll);

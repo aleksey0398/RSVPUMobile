@@ -41,6 +41,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import ru.rsvpu.mobile.Activity.SearchActivity;
+import ru.rsvpu.mobile.Activity.TutorialActivity;
 import ru.rsvpu.mobile.R;
 import ru.rsvpu.mobile.items.Container;
 import ru.rsvpu.mobile.items.SettingsHelper;
@@ -69,6 +70,8 @@ public class FragmentSettings extends Fragment {
     Switch showGroup, showClass, showTeacher;
     CardView cardTeacher, cardGroup, cardClass;
     ProgressBar progressBar;
+    View.OnClickListener fabOfflineListener;
+    View.OnClickListener fabOnlineListener;
 
     SettingsHelper settingsHelper;
     int selectedType = 0, typeForSave = 0;
@@ -125,12 +128,12 @@ public class FragmentSettings extends Fragment {
         if (data == null) {
             return;
         }
-        Container resultContainer = new Gson().fromJson(data.getStringExtra(SearchActivity.argsResult),Container.class);
+        Container resultContainer = new Gson().fromJson(data.getStringExtra(SearchActivity.argsResult), Container.class);
         selectedContainer = resultContainer;
         typeForSave = selectedType;
         fab.setVisibility(VISIBLE);
         selected.setText("Нажмите \"сохранить\"");
-        switch (resultContainer.getAttr()){
+        switch (resultContainer.getAttr()) {
             case "gr":
                 showGroup.setChecked(true);
                 break;
@@ -171,15 +174,6 @@ public class FragmentSettings extends Fragment {
             public void onNothingSelected(AdapterView<?> adapterView) {
 
             }
-        });
-
-        fab.setOnClickListener(view -> {
-            SettingsHelper helper = new SettingsHelper(getActivity());
-            helper.saveSelectedGroup(selectedContainer, typeForSave);
-            Snackbar.make(v, "Сохранено", Snackbar.LENGTH_SHORT).show();
-            selected.setText(selectedContainer.getName());
-            fab.setVisibility(GONE);
-            var.changeGroup = true;
         });
 
         setCheckListener();
@@ -229,6 +223,18 @@ public class FragmentSettings extends Fragment {
             selectedContainer = listClass.get(i);
             typeForSave = selectedType;
         });
+
+        fabOfflineListener = v -> new getList().execute();
+
+        fabOnlineListener = v -> {
+            SettingsHelper helper = new SettingsHelper(getActivity());
+            helper.saveSelectedGroup(selectedContainer, typeForSave);
+            Snackbar.make(v, "Сохранено", Snackbar.LENGTH_SHORT).show();
+            selected.setText(selectedContainer.getName());
+            fab.setVisibility(GONE);
+            var.changeGroup = true;
+            TutorialActivity.setAlarm(getActivity());
+        };
     }
 
     void setCheckListener() {
@@ -290,7 +296,7 @@ public class FragmentSettings extends Fragment {
     @SuppressLint("StaticFieldLeak")
     class getList extends AsyncTask<Void, Void, Void> {
 
-        String[] args;
+        String resultJSON;
 
         //        long startTime;
         boolean connection = true, network = false, urlValid = false;
@@ -299,44 +305,46 @@ public class FragmentSettings extends Fragment {
         protected void onPreExecute() {
             super.onPreExecute();
             progressBar.setVisibility(VISIBLE);
+            fab.setOnClickListener(fabOnlineListener);
         }
 
         @Override
         protected void onPostExecute(Void aVoid) {
             super.onPostExecute(aVoid);
+            SettingsHelper settingsHelper = new SettingsHelper(getActivity());
             if (connection) {
-                List<String> nameTeacher = new ArrayList<>();
-                for (Container teacher : listTeacher) {
-                    nameTeacher.add(teacher.getName());
-                }
-                ArrayAdapter<String> adapterTeacher = new ArrayAdapter<>(getActivity(),
-                        android.R.layout.simple_list_item_1, nameTeacher);
-                listViewTeacher.setAdapter(adapterTeacher);
-
-                List<String> nameClass = new ArrayList<>();
-                for (Container classRoom : listClass) {
-                    nameClass.add(classRoom.getName());
-                }
-                ArrayAdapter<String> adapterClass = new ArrayAdapter<>(getActivity(),
-                        android.R.layout.simple_list_item_1, nameClass);
-                listViewClass.setAdapter(adapterClass);
-
-                List<String> nameGroup = new ArrayList<>();
-                for (Container group : listGroup) {
-                    nameGroup.add(group.getName());
-                }
-                ArrayAdapter<String> adapterGroup = new ArrayAdapter<>(getActivity(),
-                        android.R.layout.simple_list_item_1, nameGroup);
-                listViewGroup.setAdapter(adapterGroup);
+                updateListView(resultJSON);
+                settingsHelper.saveCategories(resultJSON);
+                fab.setVisibility(GONE);
+                fab.setOnClickListener(fabOnlineListener);
+                fab.setImageResource(R.drawable.ic_save);
             }
-            progressBar.setVisibility(View.INVISIBLE);
-            if (!network) {
-                Toast.makeText(getActivity(), "Расписание offline", Toast.LENGTH_SHORT).show();
-            } else {
 
-                if (!urlValid) {
-                    Toast.makeText(getActivity(), "Сервер недоступен, загружаем последние сохранённые группы", Toast.LENGTH_SHORT).show();
+            progressBar.setVisibility(View.GONE);
+
+            if (!network) {
+                if (!settingsHelper.getSavedCategories().equals(SettingsHelper.NO_SAVED_CATEGORIES)) {
+                    Toast.makeText(getActivity(), "Списки offline", Toast.LENGTH_SHORT).show();
+                    updateListView(settingsHelper.getSavedCategories());
+                } else {
+                    Toast.makeText(getActivity(), "Нет сохранённых списков", Toast.LENGTH_SHORT).show();
                 }
+                fab.setOnClickListener(fabOfflineListener);
+                fab.setImageResource(R.drawable.ic_refresh);
+                fab.setVisibility(VISIBLE);
+            } else {
+                if (!urlValid) {
+                    if (!settingsHelper.getSavedCategories().equals(SettingsHelper.NO_SAVED_CATEGORIES)) {
+                        Toast.makeText(getActivity(), "Сервер недоступен, загружаем последние сохранённые группы", Toast.LENGTH_SHORT).show();
+                        updateListView(settingsHelper.getSavedCategories());
+                    } else {
+                        Toast.makeText(getActivity(), "Нет сохранённых списков", Toast.LENGTH_SHORT).show();
+                    }
+                    fab.setOnClickListener(fabOfflineListener);
+                    fab.setImageResource(R.drawable.ic_refresh);
+                    fab.setVisibility(VISIBLE);
+                }
+
             }
         }
 
@@ -363,16 +371,7 @@ public class FragmentSettings extends Fragment {
                     while ((line = reader.readLine()) != null) {
                         buffer.append(line);
                     }
-
-                    String resultJson = buffer.toString();
-                    args = resultJson.split("//");
-
-                    Type listOfTestObject = new TypeToken<List<Container>>() {
-                    }.getType();
-                    listGroup = new Gson().fromJson(args[0], listOfTestObject);
-                    listTeacher = new Gson().fromJson(args[1], listOfTestObject);
-                    listClass = new Gson().fromJson(args[2], listOfTestObject);
-
+                    resultJSON = buffer.toString();
 
                 } catch (Exception e) {
                     e.printStackTrace();
@@ -384,6 +383,40 @@ public class FragmentSettings extends Fragment {
 
             return null;
         }
+    }
+
+    void updateListView(String resultJSON) {
+        String[] args = resultJSON.split("//");
+
+        Type listOfTestObject = new TypeToken<List<Container>>() {
+        }.getType();
+        listGroup = new Gson().fromJson(args[0], listOfTestObject);
+        listTeacher = new Gson().fromJson(args[1], listOfTestObject);
+        listClass = new Gson().fromJson(args[2], listOfTestObject);
+
+        List<String> nameTeacher = new ArrayList<>();
+        for (Container teacher : listTeacher) {
+            nameTeacher.add(teacher.getName());
+        }
+        ArrayAdapter<String> adapterTeacher = new ArrayAdapter<>(getActivity(),
+                android.R.layout.simple_list_item_1, nameTeacher);
+        listViewTeacher.setAdapter(adapterTeacher);
+
+        List<String> nameClass = new ArrayList<>();
+        for (Container classRoom : listClass) {
+            nameClass.add(classRoom.getName());
+        }
+        ArrayAdapter<String> adapterClass = new ArrayAdapter<>(getActivity(),
+                android.R.layout.simple_list_item_1, nameClass);
+        listViewClass.setAdapter(adapterClass);
+
+        List<String> nameGroup = new ArrayList<>();
+        for (Container group : listGroup) {
+            nameGroup.add(group.getName());
+        }
+        ArrayAdapter<String> adapterGroup = new ArrayAdapter<>(getActivity(),
+                android.R.layout.simple_list_item_1, nameGroup);
+        listViewGroup.setAdapter(adapterGroup);
     }
 
 }

@@ -1,6 +1,9 @@
 package ru.rsvpu.mobile.Activity;
 
 import android.annotation.SuppressLint;
+import android.app.AlarmManager;
+import android.app.PendingIntent;
+import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
@@ -21,11 +24,14 @@ import com.vk.sdk.VKCallback;
 import com.vk.sdk.VKSdk;
 import com.vk.sdk.api.VKError;
 
+import java.util.Calendar;
+
 import me.relex.circleindicator.CircleIndicator;
 import ru.rsvpu.mobile.Fragments.FragmentPage;
 import ru.rsvpu.mobile.MainActivity;
 import ru.rsvpu.mobile.R;
 import ru.rsvpu.mobile.CustomView.PresentationViewPager;
+import ru.rsvpu.mobile.Services.AlarmReceiver;
 
 import static java.lang.Thread.sleep;
 
@@ -44,16 +50,12 @@ public class TutorialActivity extends AppCompatActivity {
     private final String LOG_ARGS = "TutorialActivity";
     public static boolean showFirst = false;
 
-
-    ImageView vk_btn;
-
     @SuppressLint("ClickableViewAccessibility")
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_tutorial);
         initView();
-
         titleTutorial.setAlpha(0f);
         titleTutorial.setTranslationY(200);
         titleTutorial.animate().setStartDelay(200).alpha(1f).translationY(0).setDuration(2000).start();
@@ -157,6 +159,20 @@ public class TutorialActivity extends AppCompatActivity {
 
         if (!VKSdk.onActivityResult(requestCode, resultCode, data, callback)) {
             super.onActivityResult(requestCode, resultCode, data);
+        }
+    }
+
+    public static void setAlarm(Context context){
+        Calendar calendar = Calendar.getInstance();
+        calendar.set(Calendar.HOUR_OF_DAY,20);
+        calendar.set(Calendar.MINUTE, 0);
+        Intent intent = new Intent(context, AlarmReceiver.class);
+
+        PendingIntent pIntent = PendingIntent.getBroadcast(context,100,intent,PendingIntent.FLAG_UPDATE_CURRENT);
+
+        AlarmManager alarm = (AlarmManager) context.getSystemService(ALARM_SERVICE);
+        if (alarm != null) {
+            alarm.setRepeating(AlarmManager.RTC_WAKEUP,calendar.getTimeInMillis(),AlarmManager.INTERVAL_DAY,pIntent);
         }
     }
 

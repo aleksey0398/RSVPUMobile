@@ -69,9 +69,6 @@ public class RVAdapterTimeTable extends RecyclerView.Adapter<RVAdapterTimeTable.
         holder.lesson6.setVisibility(VISIBLE);
         holder.lesson7.setVisibility(VISIBLE);
 
-//        System.out.println("\n\n");
-//        System.out.println(timeTable.dayOfTheWeek + " " + timeTable.date);
-
         for (int i = 0; i < timeTable.lessons.length; i++) {
             TimeTableOneLesson lesson = timeTable.lessons[i];
 
@@ -132,7 +129,6 @@ public class RVAdapterTimeTable extends RecyclerView.Adapter<RVAdapterTimeTable.
                 setTypeColor(holder.txt_type[i*2+1],lesson.typeOfLesson.get(1));
                 holder.txt_type[i * 2].setText(lesson.typeOfLesson.get(0));
                 holder.txt_type[i * 2 + 1].setText(lesson.typeOfLesson.get(1));
-                System.out.println(lesson.lessonsName.size());
                 holder.second_linear_layout[i].setVisibility(VISIBLE);
 
                 holder.txt_class[i*2].setText(lesson.classrooms.get(0).name);
