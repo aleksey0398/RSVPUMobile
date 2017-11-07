@@ -30,6 +30,7 @@ public class SettingsHelper {
         editor.putInt(var.SETTINGS_type, typeOfGroup);
         editor.putString(var.SETTINGS_name, container.getName());
         editor.putString(var.SETTINGS_attr, container.getAttr());
+        editor.putInt(var.SETTINGS_group_course,getGroupCourse(container.getName()));
 
         if (!setting.contains(var.SETTINGS_preview_value)) {
             editor.putString(var.SETTINGS_value, container.getValue());
@@ -72,15 +73,23 @@ public class SettingsHelper {
     }
 
     public void saveCategories(String argsForSave) {
-        editor.putString(var.SETTINGS_categries, argsForSave);
+        editor.putString(var.SETTINGS_categories, argsForSave);
         editor.apply();
     }
 
     public String getSavedCategories() {
-        if (!setting.contains(var.SETTINGS_categries)) {
+        if (!setting.contains(var.SETTINGS_categories)) {
             return NO_SAVED_CATEGORIES;
         } else {
-            return setting.getString(var.SETTINGS_categries,NO_SAVED_CATEGORIES);
+            return setting.getString(var.SETTINGS_categories,NO_SAVED_CATEGORIES);
         }
+    }
+
+    private int getGroupCourse(String group){
+       return Integer.valueOf(String.valueOf(group.split("-")[1].charAt(0)));
+    }
+
+    public int getGroupCourse(){
+        return setting.getInt(var.SETTINGS_group_course,-1);
     }
 }

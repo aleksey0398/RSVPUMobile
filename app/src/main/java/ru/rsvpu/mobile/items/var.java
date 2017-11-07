@@ -19,5 +19,6 @@ public class var {
     static final String SETTINGS_attr = "attr_time_table";
     static final String SETTINGS_name = "name_time_table";
     static final String SETTINGS_time_table = "save_time_table";
-    static final String SETTINGS_categries = "save_categories_time_table";
+    static final String SETTINGS_categories = "save_categories_time_table";
+    static final String SETTINGS_group_course = "save_group_course_time_table";
 }

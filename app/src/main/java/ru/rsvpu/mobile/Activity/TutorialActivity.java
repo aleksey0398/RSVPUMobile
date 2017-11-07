@@ -15,7 +15,6 @@ import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.View;
-import android.widget.ImageView;
 import android.widget.TextView;
 
 
@@ -31,7 +30,13 @@ import ru.rsvpu.mobile.Fragments.FragmentPage;
 import ru.rsvpu.mobile.MainActivity;
 import ru.rsvpu.mobile.R;
 import ru.rsvpu.mobile.CustomView.PresentationViewPager;
-import ru.rsvpu.mobile.Services.AlarmReceiver;
+import ru.rsvpu.mobile.Services.DayAlarmReceiver;
+import ru.rsvpu.mobile.Services.DayAlarmReceiver2;
+import ru.rsvpu.mobile.Services.DayAlarmReceiver3;
+import ru.rsvpu.mobile.Services.DayAlarmReceiver4;
+import ru.rsvpu.mobile.Services.DayAlarmReceiver5;
+import ru.rsvpu.mobile.Services.EveningAlarmReceiver;
+import ru.rsvpu.mobile.items.SettingsHelper;
 
 import static java.lang.Thread.sleep;
 
@@ -143,7 +148,7 @@ public class TutorialActivity extends AppCompatActivity {
             public void onResult(VKAccessToken res) {
                 // User passed Authorization
                 Log.d(LOG_ARGS, String.valueOf(res));
-                startActivity(new Intent(getApplicationContext(), MainActivity.class).putExtra("firstStart",1));
+                startActivity(new Intent(getApplicationContext(), MainActivity.class).putExtra("firstStart", 1));
                 finish();
             }
 
@@ -162,18 +167,55 @@ public class TutorialActivity extends AppCompatActivity {
         }
     }
 
-    public static void setAlarm(Context context){
+    public static void setAlarm(Context context) {
         Calendar calendar = Calendar.getInstance();
-        calendar.set(Calendar.HOUR_OF_DAY,20);
+        calendar.set(Calendar.HOUR_OF_DAY, 20);
         calendar.set(Calendar.MINUTE, 0);
-        Intent intent = new Intent(context, AlarmReceiver.class);
+        Intent intent = new Intent(context, EveningAlarmReceiver.class);
 
-        PendingIntent pIntent = PendingIntent.getBroadcast(context,100,intent,PendingIntent.FLAG_UPDATE_CURRENT);
+        PendingIntent pIntent = PendingIntent.getBroadcast(context, 100, intent, PendingIntent.FLAG_UPDATE_CURRENT);
 
         AlarmManager alarm = (AlarmManager) context.getSystemService(ALARM_SERVICE);
         if (alarm != null) {
-            alarm.setRepeating(AlarmManager.RTC_WAKEUP,calendar.getTimeInMillis(),AlarmManager.INTERVAL_DAY,pIntent);
+            alarm.setRepeating(AlarmManager.RTC_WAKEUP, calendar.getTimeInMillis(), AlarmManager.INTERVAL_DAY, pIntent);
         }
+    }
+
+    public static void setAlarmPair(Context context) {
+
+        Intent intents[] = {new Intent(context, DayAlarmReceiver.class),
+                new Intent(context, DayAlarmReceiver2.class),
+                new Intent(context, DayAlarmReceiver3.class),
+                new Intent(context, DayAlarmReceiver4.class),
+                new Intent(context, DayAlarmReceiver5.class)
+        };
+
+        PendingIntent pIntents[] = {
+                PendingIntent.getBroadcast(context, 100, intents[0], PendingIntent.FLAG_UPDATE_CURRENT),
+                PendingIntent.getBroadcast(context, 100, intents[1], PendingIntent.FLAG_UPDATE_CURRENT),
+                PendingIntent.getBroadcast(context, 100, intents[2], PendingIntent.FLAG_UPDATE_CURRENT),
+                PendingIntent.getBroadcast(context, 100, intents[3], PendingIntent.FLAG_UPDATE_CURRENT),
+                PendingIntent.getBroadcast(context, 100, intents[4], PendingIntent.FLAG_UPDATE_CURRENT)
+        };
+
+        Calendar calendar = Calendar.getInstance();
+        SettingsHelper helper = new SettingsHelper(context);
+        for (int i = 0; i < 5; i++) {
+
+            if (helper.getGroupCourse() == 1 || helper.getGroupCourse() == 2) {
+                calendar.set(Calendar.HOUR_OF_DAY, DayAlarmReceiver.hours12[i]);
+                calendar.set(Calendar.MINUTE, DayAlarmReceiver.minutes12[i]);
+            } else {
+                calendar.set(Calendar.HOUR_OF_DAY, DayAlarmReceiver.hours345[i]);
+                calendar.set(Calendar.MINUTE, DayAlarmReceiver.minutes345[i]);
+            }
+
+            AlarmManager alarm = (AlarmManager) context.getSystemService(ALARM_SERVICE);
+            if (alarm != null) {
+                alarm.setRepeating(AlarmManager.RTC_WAKEUP, calendar.getTimeInMillis(), AlarmManager.INTERVAL_DAY, pIntents[i]);
+            }
+        }
+
     }
 
     class myFragmentPageAdapter extends FragmentPagerAdapter {

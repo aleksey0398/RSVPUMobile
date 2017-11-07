@@ -45,8 +45,8 @@ import static android.content.Context.NOTIFICATION_SERVICE;
  * on 05.11.2017.
  */
 
-public class AlarmReceiver extends BroadcastReceiver {
-    final String LOG_ARGS = "AlarmReceiver";
+public class EveningAlarmReceiver extends BroadcastReceiver {
+    final String LOG_ARGS = "EveningAlarmReceiver";
     static int id = 0;
     private static final String NOTIFICATION_CHANNEL_ID = "my_notification_channel";
     String tomorrow = "";
@@ -62,8 +62,9 @@ public class AlarmReceiver extends BroadcastReceiver {
         PendingIntent pIntent = PendingIntent.getActivity(context, 100, repeatingIntent, PendingIntent.FLAG_UPDATE_CURRENT);
 
         String title = null;
+        SettingsHelper helper = new SettingsHelper(context);
         try {
-            SettingsHelper helper = new SettingsHelper(context);
+
             if (helper.getSettings().getAttr().equals("nothing")) {
                 title = "Чтобы получать уведомления о занятии на следущий день, зайдите в настройки и выберите группу, преподавателя или аудиторию";
             } else {
@@ -83,13 +84,15 @@ public class AlarmReceiver extends BroadcastReceiver {
             notificationChannel.enableLights(true);
             notificationChannel.setLightColor(Color.CYAN);
             notificationChannel.enableVibration(true);
-            notificationManager.createNotificationChannel(notificationChannel);
+            if (notificationManager != null) {
+                notificationManager.createNotificationChannel(notificationChannel);
+            }
         }
 
         NotificationCompat.Builder notification = new NotificationCompat.Builder(context, NOTIFICATION_CHANNEL_ID)
                 .setContentIntent(pIntent)
                 .setAutoCancel(true)
-                .setContentTitle("Расписание на завтра " + tomorrow)
+                .setContentTitle("Расписание на завтра " + helper.getSettings().getName())
                 .setSmallIcon(R.mipmap.ic_launcher)
                 .setDefaults(Notification.DEFAULT_ALL)
                 .setContentText(new SettingsHelper(context).getSettings().getName())
@@ -178,6 +181,7 @@ public class AlarmReceiver extends BroadcastReceiver {
         for (TimeTableOneDay oneDay : timeTableOneDays) {
             if (oneDay.date.equals(DateUtil.generateToday())) {
                 nextOneDay = timeTableOneDays.get(++i);
+
                 break;
             }
             i++;
@@ -203,12 +207,22 @@ public class AlarmReceiver extends BroadcastReceiver {
         for (TimeTableOneLesson oneLesson : nextOneDay.lessons) {
             currentPair++;
             if (oneLesson.lessonsName.size() == 1) {
-                title += oneLesson.timeStart + ".";
-                title += currentPair + "." + oneLesson.lessonsName.get(0) + "\n\n";
+
+                if(oneLesson.lessonsName.get(0).equals("-"))
+                    continue;
+
+                title += oneLesson.timeStart + " ";
+                title += currentPair + "." + oneLesson.lessonsName.get(0) + " "+oneLesson.classrooms.get(0).name;
+                if(oneLesson.numberOfGroup.get(0)!=null)
+                    title += " "+oneLesson.numberOfGroup.get(0)+"\n";
+                else
+                    title += "\n";
             } else {
-                title += oneLesson.timeStart + ".";
-                title += currentPair + "." + oneLesson.lessonsName.get(0) + "\n";
-                title += "\t" + oneLesson.lessonsName.get(0) + "\n\n";
+                title += oneLesson.timeStart + ":";
+                title += currentPair + "." + oneLesson.lessonsName.get(0) + " "+oneLesson.classrooms.get(0).name+
+                        oneLesson.numberOfGroup.get(0)+"\n";
+                title += "\t" + oneLesson.lessonsName.get(1)+" "+ oneLesson.classrooms.get(0).name +
+                       oneLesson.numberOfGroup.get(1) + "\n";
             }
         }
 

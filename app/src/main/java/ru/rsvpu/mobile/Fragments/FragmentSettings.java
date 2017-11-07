@@ -234,6 +234,11 @@ public class FragmentSettings extends Fragment {
             fab.setVisibility(GONE);
             var.changeGroup = true;
             TutorialActivity.setAlarm(getActivity());
+            if (selectedContainer.getAttr().equals("gr")) {
+                TutorialActivity.setAlarmPair(getActivity());
+            } else {
+                Toast.makeText(getActivity(),"Для преподавателей уведомления не выводятся",Toast.LENGTH_SHORT).show();
+            }
         };
     }
 

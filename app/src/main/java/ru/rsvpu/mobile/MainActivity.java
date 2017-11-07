@@ -1,8 +1,6 @@
 package ru.rsvpu.mobile;
 
 import android.annotation.SuppressLint;
-import android.app.AlarmManager;
-import android.app.PendingIntent;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.design.internal.BottomNavigationItemView;
@@ -16,14 +14,11 @@ import android.view.MenuItem;
 
 import com.vk.sdk.VKSdk;
 
-import java.util.Calendar;
-
 import ru.rsvpu.mobile.Activity.TutorialActivity;
 import ru.rsvpu.mobile.Fragments.FragmentAds;
 import ru.rsvpu.mobile.Fragments.FragmentNews;
 import ru.rsvpu.mobile.Fragments.FragmentSettings;
 import ru.rsvpu.mobile.Fragments.FragmentTimeTable;
-import ru.rsvpu.mobile.Services.AlarmReceiver;
 import ru.rsvpu.mobile.Services.SendToServerService;
 import ru.rsvpu.mobile.items.Container;
 import ru.rsvpu.mobile.items.SettingsHelper;

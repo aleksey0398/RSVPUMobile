@@ -18,5 +18,6 @@ public class DeviceStartBroadcast extends BroadcastReceiver {
     public void onReceive(Context context, Intent intent) {
         Log.d(LOG_ARGS,"Device wakeup set Alarm Manager");
         TutorialActivity.setAlarm(context);
+        TutorialActivity.setAlarmPair(context);
     }
 }
