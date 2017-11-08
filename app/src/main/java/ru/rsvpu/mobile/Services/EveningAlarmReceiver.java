@@ -8,6 +8,7 @@ import android.app.PendingIntent;
 import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.BitmapFactory;
 import android.graphics.Color;
 import android.os.AsyncTask;
 import android.os.Build;
@@ -93,7 +94,8 @@ public class EveningAlarmReceiver extends BroadcastReceiver {
                 .setContentIntent(pIntent)
                 .setAutoCancel(true)
                 .setContentTitle("Расписание на завтра " + helper.getSettings().getName())
-                .setSmallIcon(R.mipmap.ic_launcher)
+                .setSmallIcon(R.drawable.ic_today)
+                .setLargeIcon(BitmapFactory.decodeResource(context.getResources(),R.mipmap.ic_launcher,null))
                 .setDefaults(Notification.DEFAULT_ALL)
                 .setContentText(new SettingsHelper(context).getSettings().getName())
                 .setStyle(new NotificationCompat.BigTextStyle().bigText(title));

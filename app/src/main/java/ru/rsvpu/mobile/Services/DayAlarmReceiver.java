@@ -7,6 +7,8 @@ import android.app.PendingIntent;
 import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.graphics.Color;
 import android.os.Build;
 import android.support.v4.app.NotificationCompat;
@@ -71,7 +73,7 @@ public class DayAlarmReceiver extends BroadcastReceiver {
 
     private void setTimeStart() {
         Calendar calendar = Calendar.getInstance();
-        calendar.set(Calendar.HOUR, hours);
+        calendar.set(Calendar.HOUR_OF_DAY, hours);
         calendar.set(Calendar.MINUTE, minutes);
         timeStart = calendar.getTimeInMillis();
     }
@@ -85,8 +87,11 @@ public class DayAlarmReceiver extends BroadcastReceiver {
         Log.d(LOG_ARGS, LOG_ARGS);
         setHoursMinutes(context);
         setTimeStart();
+        Log.d(LOG_ARGS,"Time: "+String.valueOf((System.currentTimeMillis() - timeStart)));
+        Log.d(LOG_ARGS,"15 min: "+String.valueOf((1000*60*15)));
+        Log.d(LOG_ARGS,"15 is over? : "+String.valueOf((System.currentTimeMillis() - timeStart)>(1000*60*15)));
 
-        if (System.currentTimeMillis() - timeStart < 1000 * 60 * 15) {
+        if ((System.currentTimeMillis() - timeStart) < (1000 * 60 * 15)) {
             try {
                 timeTableOneDays = new GetTimeTableForNotif().execute(context).get();
                 for (TimeTableOneDay oneDay : timeTableOneDays) {
@@ -134,8 +139,9 @@ public class DayAlarmReceiver extends BroadcastReceiver {
         NotificationCompat.Builder notification = new NotificationCompat.Builder(context, NOTIFICATION_CHANNEL_ID)
                 .setContentIntent(pIntent)
                 .setAutoCancel(true)
-                .setContentTitle("Следующая пара " + helper.getSettings().getName())
+                .setContentTitle("Следующая пара в " + nextLesson.timeStart)
                 .setSmallIcon(R.drawable.ic_next_notification)
+                .setLargeIcon(BitmapFactory.decodeResource(context.getResources(),R.mipmap.ic_launcher,null))
                 .setDefaults(Notification.DEFAULT_ALL)
                 .setContentText(new SettingsHelper(context).getSettings().getName())
                 .setStyle(new NotificationCompat.BigTextStyle().bigText(title));
@@ -152,7 +158,7 @@ public class DayAlarmReceiver extends BroadcastReceiver {
                 return null;
             } else {
                 titleForMessage = nextLesson.typeOfLesson.get(0)+"\n";
-                titleForMessage += nextLesson.lessonsName.get(0) + "\nКабинет:" + nextLesson.classrooms.get(0).name;
+                titleForMessage += nextLesson.lessonsName.get(0) + "\nКабинет: " + nextLesson.classrooms.get(0).name;
                 if (nextLesson.numberOfGroup.get(0) != null) {
                     titleForMessage +=" " +nextLesson.numberOfGroup.get(0);
                 }
@@ -160,12 +166,12 @@ public class DayAlarmReceiver extends BroadcastReceiver {
             }
         } else {
             titleForMessage = nextLesson.typeOfLesson.get(0)+"\n";
-            titleForMessage += nextLesson.lessonsName.get(0) + "\nКабинет:" + nextLesson.classrooms.get(0).name;
+            titleForMessage += nextLesson.lessonsName.get(0) + "\nКабинет: " + nextLesson.classrooms.get(0).name;
             titleForMessage += " у " + nextLesson.numberOfGroup.get(0);
             titleForMessage += "\n" + nextLesson.teachers.get(0).name+"\n";
 
             titleForMessage += nextLesson.typeOfLesson.get(1)+"\n";
-            titleForMessage += nextLesson.lessonsName.get(1) + "\nКабинет:" + nextLesson.classrooms.get(1).name;
+            titleForMessage += nextLesson.lessonsName.get(1) + "\nКабинет: " + nextLesson.classrooms.get(1).name;
             titleForMessage += " у " + nextLesson.numberOfGroup.get(1) + "\n";
             titleForMessage += "\n" + nextLesson.teachers.get(1).name;
         }
