@@ -55,7 +55,6 @@ public class TutorialActivity extends AppCompatActivity {
     private final String LOG_ARGS = "TutorialActivity";
     public static boolean showFirst = false;
 
-    @SuppressLint("ClickableViewAccessibility")
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -167,21 +166,24 @@ public class TutorialActivity extends AppCompatActivity {
         }
     }
 
-    public static void setAlarm(Context context) {
+    public static void setAlarm(Context context, boolean stop) {
         Calendar calendar = Calendar.getInstance();
         calendar.set(Calendar.HOUR_OF_DAY, 20);
         calendar.set(Calendar.MINUTE, 0);
         Intent intent = new Intent(context, EveningAlarmReceiver.class);
 
-        PendingIntent pIntent = PendingIntent.getBroadcast(context, 100, intent, PendingIntent.FLAG_UPDATE_CURRENT);
+        PendingIntent pIntent = PendingIntent.getBroadcast(context, 100, intent, !stop ? PendingIntent.FLAG_UPDATE_CURRENT : 0);
 
         AlarmManager alarm = (AlarmManager) context.getSystemService(ALARM_SERVICE);
         if (alarm != null) {
-            alarm.setRepeating(AlarmManager.RTC_WAKEUP, calendar.getTimeInMillis(), AlarmManager.INTERVAL_DAY, pIntent);
+            if (!stop)
+                alarm.setRepeating(AlarmManager.RTC_WAKEUP, calendar.getTimeInMillis(), AlarmManager.INTERVAL_DAY, pIntent);
+            else
+                alarm.cancel(pIntent);
         }
     }
 
-    public static void setAlarmPair(Context context) {
+    public static void setAlarmPair(Context context, boolean stop) {
 
         Intent intents[] = {new Intent(context, DayAlarmReceiver.class),
                 new Intent(context, DayAlarmReceiver2.class),
@@ -191,11 +193,11 @@ public class TutorialActivity extends AppCompatActivity {
         };
 
         PendingIntent pIntents[] = {
-                PendingIntent.getBroadcast(context, 100, intents[0], PendingIntent.FLAG_UPDATE_CURRENT),
-                PendingIntent.getBroadcast(context, 100, intents[1], PendingIntent.FLAG_UPDATE_CURRENT),
-                PendingIntent.getBroadcast(context, 100, intents[2], PendingIntent.FLAG_UPDATE_CURRENT),
-                PendingIntent.getBroadcast(context, 100, intents[3], PendingIntent.FLAG_UPDATE_CURRENT),
-                PendingIntent.getBroadcast(context, 100, intents[4], PendingIntent.FLAG_UPDATE_CURRENT)
+                PendingIntent.getBroadcast(context, 100, intents[0], !stop ? PendingIntent.FLAG_UPDATE_CURRENT : 0),
+                PendingIntent.getBroadcast(context, 100, intents[1], !stop ? PendingIntent.FLAG_UPDATE_CURRENT : 0),
+                PendingIntent.getBroadcast(context, 100, intents[2], !stop ? PendingIntent.FLAG_UPDATE_CURRENT : 0),
+                PendingIntent.getBroadcast(context, 100, intents[3], !stop ? PendingIntent.FLAG_UPDATE_CURRENT : 0),
+                PendingIntent.getBroadcast(context, 100, intents[4], !stop ? PendingIntent.FLAG_UPDATE_CURRENT : 0)
         };
 
         Calendar calendar = Calendar.getInstance();
@@ -212,7 +214,10 @@ public class TutorialActivity extends AppCompatActivity {
 
             AlarmManager alarm = (AlarmManager) context.getSystemService(ALARM_SERVICE);
             if (alarm != null) {
-                alarm.setRepeating(AlarmManager.RTC_WAKEUP, calendar.getTimeInMillis(), AlarmManager.INTERVAL_DAY, pIntents[i]);
+                if (!stop)
+                    alarm.setRepeating(AlarmManager.RTC_WAKEUP, calendar.getTimeInMillis(), AlarmManager.INTERVAL_DAY, pIntents[i]);
+                else
+                    alarm.cancel(pIntents[i]);
             }
         }
 

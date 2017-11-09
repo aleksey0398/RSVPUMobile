@@ -12,7 +12,7 @@ import java.net.URL;
  *
  */
 
-public class myNetwork {
+public class MyNetwork {
 
     public static boolean checkURL() {
 

@@ -23,7 +23,7 @@ import java.util.List;
 
 import ru.rsvpu.mobile.Activity.NewsActivity;
 import ru.rsvpu.mobile.R;
-import ru.rsvpu.mobile.items.itemNews;
+import ru.rsvpu.mobile.items.ItemNews;
 
 /**
  * Created by aleksej on 10.08.16.
@@ -32,7 +32,7 @@ import ru.rsvpu.mobile.items.itemNews;
 public class RVAdapterNews extends RecyclerView.Adapter<RVAdapterNews.newsViewHolder> {
 
     private Context context;
-    private List<itemNews> newsList = new ArrayList<>();
+    private List<ItemNews> newsList = new ArrayList<>();
 
 
     public RVAdapterNews(Context context) {
@@ -47,7 +47,7 @@ public class RVAdapterNews extends RecyclerView.Adapter<RVAdapterNews.newsViewHo
 
     @Override
     public void onBindViewHolder(final newsViewHolder holder, final int position) {
-        final itemNews news = newsList.get(position);
+        final ItemNews news = newsList.get(position);
 
         holder.time.setText(news.getDate());
         holder.news.setText(news.getNews());
@@ -182,12 +182,12 @@ public class RVAdapterNews extends RecyclerView.Adapter<RVAdapterNews.newsViewHo
         context = contextFrom;
     }
 
-    public void setList(List<itemNews> list) {
+    public void setList(List<ItemNews> list) {
         newsList = list;
         notifyDataSetChanged();
     }
 
-    public void addArray(final itemNews[] arrayItemNews) {
+    public void addArray(final ItemNews[] arrayItemNews) {
         newsList.clear();
 
         if (arrayItemNews != null) {
@@ -199,7 +199,7 @@ public class RVAdapterNews extends RecyclerView.Adapter<RVAdapterNews.newsViewHo
     }
 
 
-    public void addNews(itemNews newsToAdd) {
+    public void addNews(ItemNews newsToAdd) {
         newsList.add(newsToAdd);
         notifyDataSetChanged();
     }

@@ -2,6 +2,8 @@ package ru.rsvpu.mobile;
 
 import android.annotation.SuppressLint;
 import android.content.Intent;
+import android.content.pm.PackageInfo;
+import android.content.pm.PackageManager;
 import android.os.Bundle;
 import android.support.design.internal.BottomNavigationItemView;
 import android.support.design.widget.BottomNavigationView;
@@ -9,9 +11,13 @@ import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v7.app.AppCompatActivity;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 
+import com.google.android.gms.tasks.Task;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
 import com.vk.sdk.VKSdk;
 
 import ru.rsvpu.mobile.Activity.TutorialActivity;
@@ -21,6 +27,7 @@ import ru.rsvpu.mobile.Fragments.FragmentSettings;
 import ru.rsvpu.mobile.Fragments.FragmentTimeTable;
 import ru.rsvpu.mobile.Services.SendToServerService;
 import ru.rsvpu.mobile.items.Container;
+import ru.rsvpu.mobile.items.DateUtil;
 import ru.rsvpu.mobile.items.SettingsHelper;
 import ru.rsvpu.mobile.items.var;
 
@@ -34,9 +41,13 @@ public class MainActivity extends AppCompatActivity {
     private final String LOG_ARGS = "Main_Activity";
 
     @Override
-    protected void onStart() {
-        super.onStart();
-
+    protected void onResume() {
+        super.onResume();
+        Log.d(LOG_ARGS, "OnResume");
+        if (!VKSdk.isLoggedIn()) {
+            startActivity(new Intent(getApplicationContext(), TutorialActivity.class));
+            finish();
+        }
     }
 
     @Override
@@ -47,6 +58,7 @@ public class MainActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        sendStatisticToFirebase();
 
         if (!VKSdk.isLoggedIn()) {
             startActivity(new Intent(this, TutorialActivity.class));
@@ -142,7 +154,32 @@ public class MainActivity extends AppCompatActivity {
         });
     }
 
+    void sendStatisticToFirebase() {
+        FirebaseDatabase firebaseDatabase = FirebaseDatabase.getInstance();
+        DatabaseReference mReference = firebaseDatabase.getReference();
+        SettingsHelper helper = new SettingsHelper(getApplicationContext());
 
+        if (helper.getVkData()[3].equals("-"))
+            return;
+
+        mReference.child("users")
+                .child(helper.getVkData()[3])
+                .child("last_connection_at")
+                .setValue(DateUtil.generateToday() + " " + DateUtil.generateTime());
+
+        mReference.child("users")
+                .child(helper.getVkData()[3])
+                .child("last_connection_milliseconds")
+                .setValue(System.currentTimeMillis());
+
+        try {
+            PackageInfo pInfo = getApplicationContext().getPackageManager().getPackageInfo(getPackageName(), 0);
+            String version = pInfo.versionName;
+            mReference.child("users").child(helper.getVkData()[3]).child("current_version").setValue(version);
+        } catch (PackageManager.NameNotFoundException e) {
+            e.printStackTrace();
+        }
+    }
 
     @SuppressLint("RestrictedApi")
     void setTitleTimeTable() {

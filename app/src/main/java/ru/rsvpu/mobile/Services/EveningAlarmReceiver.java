@@ -36,7 +36,7 @@ import ru.rsvpu.mobile.items.DateUtil;
 import ru.rsvpu.mobile.items.SettingsHelper;
 import ru.rsvpu.mobile.items.TimeTableOneDay;
 import ru.rsvpu.mobile.items.TimeTableOneLesson;
-import ru.rsvpu.mobile.items.myNetwork;
+import ru.rsvpu.mobile.items.MyNetwork;
 import ru.rsvpu.mobile.items.var;
 
 import static android.content.Context.NOTIFICATION_SERVICE;
@@ -118,9 +118,9 @@ public class EveningAlarmReceiver extends BroadcastReceiver {
         protected String doInBackground(Context... contexts) {
 //            Log.d(LOG_ARGS, "doInBackground");
             context = contexts[0];
-            network = myNetwork.isWorking(contexts[0]);
+            network = MyNetwork.isWorking(contexts[0]);
             if (network) {
-                urlValid = myNetwork.checkURL();
+                urlValid = MyNetwork.checkURL();
             }
 
             if (network && urlValid) {

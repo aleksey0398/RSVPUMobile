@@ -51,16 +51,14 @@
                 <action android:name="android.intent.action.BOOT_COMPLETED" />
             </intent-filter>
         </receiver>
-
         <receiver
             android:name=".Services.EveningAlarmReceiver"
             android:enabled="true" />
 
-        <!--+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=-->
+        <!-- +=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+= -->
         <receiver
             android:name=".Services.DayAlarmReceiver"
             android:enabled="true" />
-
         <receiver
             android:name=".Services.DayAlarmReceiver2"
             android:enabled="true" />
@@ -73,6 +71,15 @@
         <receiver
             android:name=".Services.DayAlarmReceiver5"
             android:enabled="true" />
+
+        <activity
+            android:name=".Activity.SettingActivity"
+            android:label="@string/title_activity_setting"
+            android:theme="@style/AppTheme.NoActionBar" />
+        <activity
+            android:name=".Activity.PeopleTActivity"
+            android:label="@string/title_activity_people_t"
+            android:theme="@style/AppTheme.NoActionBar"></activity>
     </application>
 
 </manifest>

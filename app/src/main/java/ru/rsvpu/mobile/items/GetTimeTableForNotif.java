@@ -31,9 +31,9 @@ public class GetTimeTableForNotif extends AsyncTask<Context, Void, List<TimeTabl
     protected List<TimeTableOneDay> doInBackground(Context... contexts) {
         Context context = contexts[0];
 
-        boolean network = myNetwork.isWorking(contexts[0]);
+        boolean network = MyNetwork.isWorking(contexts[0]);
         if (network) {
-            urlValid = myNetwork.checkURL();
+            urlValid = MyNetwork.checkURL();
         }
 
         boolean connection;

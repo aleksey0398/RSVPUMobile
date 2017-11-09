@@ -41,11 +41,12 @@ import java.util.ArrayList;
 import java.util.List;
 
 import ru.rsvpu.mobile.Activity.SearchActivity;
+import ru.rsvpu.mobile.Activity.SettingActivity;
 import ru.rsvpu.mobile.Activity.TutorialActivity;
 import ru.rsvpu.mobile.R;
 import ru.rsvpu.mobile.items.Container;
 import ru.rsvpu.mobile.items.SettingsHelper;
-import ru.rsvpu.mobile.items.myNetwork;
+import ru.rsvpu.mobile.items.MyNetwork;
 import ru.rsvpu.mobile.items.var;
 
 import static android.view.View.GONE;
@@ -118,6 +119,11 @@ public class FragmentSettings extends Fragment {
 
                 startActivityForResult(intentForSearch, 100);
                 Log.d(LOG_ARGS, "Search pressed");
+                break;
+            case R.id.menu_item_setting:
+
+                Intent intentForSettings = new Intent(getActivity(), SettingActivity.class);
+                startActivity(intentForSettings);
                 break;
         }
         return super.onOptionsItemSelected(item);
@@ -233,11 +239,15 @@ public class FragmentSettings extends Fragment {
             selected.setText(selectedContainer.getName());
             fab.setVisibility(GONE);
             var.changeGroup = true;
-            TutorialActivity.setAlarm(getActivity());
-            if (selectedContainer.getAttr().equals("gr")) {
-                TutorialActivity.setAlarmPair(getActivity());
-            } else {
-                Toast.makeText(getActivity(),"Для преподавателей уведомления не выводятся",Toast.LENGTH_SHORT).show();
+
+            if (helper.getCheckedEvening())
+                TutorialActivity.setAlarm(getActivity(), false);
+
+            if (selectedContainer.getAttr().equals("gr") && helper.getCheckedDay()) {
+                TutorialActivity.setAlarmPair(getActivity(), false);
+            } else if (!selectedContainer.getAttr().equals("gr")) {
+                Toast.makeText(getActivity(), "Для преподавателей уведомления о следующей паре не выводятся", Toast.LENGTH_SHORT).show();
+                TutorialActivity.setAlarmPair(getActivity(),true);
             }
         };
     }
@@ -358,8 +368,8 @@ public class FragmentSettings extends Fragment {
             HttpURLConnection urlConnection;
             BufferedReader reader;
 
-            network = myNetwork.isWorking(getActivity());
-            urlValid = myNetwork.checkURL();
+            network = MyNetwork.isWorking(getActivity());
+            urlValid = MyNetwork.checkURL();
             if (network && urlValid) {
                 try {
                     URL url = new URL(var.url + (selectedType != 0 ? "getAllZaochnoe" : "getAllOchnoe"));

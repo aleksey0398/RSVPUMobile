@@ -24,13 +24,13 @@ public class SettingsHelper {
     public void saveSelectedGroup(Container container, int typeOfGroup) {
         System.out.println("Save settings:\n" + container.getAttr() + "\n" + container.getValue() + "\n" + container.getName() + "\n" + typeOfGroup);
 
-//        SharedPreferences setting = context.getSharedPreferences(var.SETTINGS_MAIN,Context.MODE_PRIVATE);
-//        SharedPreferences.Editor editor = setting.edit();
-
         editor.putInt(var.SETTINGS_type, typeOfGroup);
         editor.putString(var.SETTINGS_name, container.getName());
         editor.putString(var.SETTINGS_attr, container.getAttr());
-        editor.putInt(var.SETTINGS_group_course,getGroupCourse(container.getName()));
+
+        //save course for only group
+        if (container.getAttr().equals("gr"))
+            editor.putInt(var.SETTINGS_group_course, getGroupCourse(container.getName()));
 
         if (!setting.contains(var.SETTINGS_preview_value)) {
             editor.putString(var.SETTINGS_value, container.getValue());
@@ -81,15 +81,55 @@ public class SettingsHelper {
         if (!setting.contains(var.SETTINGS_categories)) {
             return NO_SAVED_CATEGORIES;
         } else {
-            return setting.getString(var.SETTINGS_categories,NO_SAVED_CATEGORIES);
+            return setting.getString(var.SETTINGS_categories, NO_SAVED_CATEGORIES);
         }
     }
 
-    private int getGroupCourse(String group){
-       return Integer.valueOf(String.valueOf(group.split("-")[1].charAt(0)));
+    private int getGroupCourse(String group) {
+        return Integer.valueOf(String.valueOf(group.split("-")[1].charAt(0)));
     }
 
-    public int getGroupCourse(){
-        return setting.getInt(var.SETTINGS_group_course,-1);
+    public int getGroupCourse() {
+        return setting.getInt(var.SETTINGS_group_course, -1);
+    }
+
+    public void saveVKData(String name, String surname, String urlPhoto, String id) {
+        editor.putString(var.SETTINGS_person_name, name);
+        editor.putString(var.SETTINGS_person_surname, surname);
+        editor.putString(var.SETTINGS_photo_url, urlPhoto);
+        editor.putString(var.SETTINGS_person_id, id);
+        editor.apply();
+    }
+
+    public String[] getVkData() {
+        return new String[]{setting.getString(var.SETTINGS_person_name, "-"),
+                setting.getString(var.SETTINGS_person_surname, "-"),
+                setting.getString(var.SETTINGS_photo_url, "-"),
+                setting.getString(var.SETTINGS_person_id, "-")};
+    }
+
+    public void removeAllSettings() {
+        editor.clear().apply();
+    }
+
+    public boolean getCheckedDay() {
+        return setting.getBoolean(var.SETTINGS_alarm_day, true);
+    }
+
+    public boolean getCheckedEvening() {
+        return setting.getBoolean(var.SETTINGS_alarm_evening, true);
+    }
+
+    public void saveCheckedDay(boolean check) {
+        editor.putBoolean(var.SETTINGS_alarm_day, check);
+        editor.apply();
+    }
+
+    public void saveCheckedEvening(boolean check) {
+        editor.putBoolean(var.SETTINGS_alarm_evening, check);
+    }
+
+    public boolean checkContains(String args) {
+        return setting.contains(args);
     }
 }

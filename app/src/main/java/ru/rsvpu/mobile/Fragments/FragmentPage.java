@@ -25,7 +25,7 @@ public class FragmentPage extends Fragment {
 
     static final String ARGUMENT_PAGE_NUMBER = "arg_page_number";
     static final int[] pictures = {
-            R.drawable.logo_500,
+            R.drawable.logo_512,
             R.drawable.ic_tutorial_speed,
             R.drawable.ic_tutorial_internet_off,
             R.drawable.ic_tutorial_notification,
@@ -35,7 +35,7 @@ public class FragmentPage extends Fragment {
             "",
             "Приложение в 30 раз быстрее сайта",
             "Расписание доступно без сети",
-            "Получайте уведомления о парах на текущий день. Ну и остальные новости...",
+            "Получайте уведомления о парах на текущий день.\nНу и остальные новости...",
             "Авторизуйтесь через ВК, нажав на иконку"
     };
 

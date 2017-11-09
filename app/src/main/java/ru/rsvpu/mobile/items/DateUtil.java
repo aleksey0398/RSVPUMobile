@@ -25,6 +25,14 @@ public class DateUtil {
         return (day<10?"0"+day:day)+"."+(month<10?"0"+month:month)+"."+year;
     }
 
+    public static String generateTime(){
+        Calendar calendar = Calendar.getInstance();
+        int hours = calendar.get(Calendar.HOUR_OF_DAY);
+        int minutes = calendar.get(Calendar.MINUTE);
+        int seconds = calendar.get(Calendar.SECOND);
+        return hours+":"+minutes+":"+seconds;
+    }
+
     public int getCurrentDayInWeek(){
         Calendar cal= Calendar.getInstance();
         return cal.get(Calendar.DAY_OF_WEEK);

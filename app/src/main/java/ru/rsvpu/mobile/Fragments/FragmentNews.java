@@ -1,9 +1,12 @@
 package ru.rsvpu.mobile.Fragments;
 
+import android.animation.Animator;
 import android.annotation.SuppressLint;
+import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.support.design.widget.FloatingActionButton;
 import android.support.v4.app.Fragment;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.DefaultItemAnimator;
@@ -23,16 +26,19 @@ import org.jsoup.select.Elements;
 
 import java.io.IOException;
 
+import ru.rsvpu.mobile.Activity.PeopleTActivity;
 import ru.rsvpu.mobile.Adapters.RVAdapterNews;
 import ru.rsvpu.mobile.R;
-import ru.rsvpu.mobile.items.itemNews;
-import ru.rsvpu.mobile.items.myNetwork;
+import ru.rsvpu.mobile.items.ItemNews;
+import ru.rsvpu.mobile.items.MyNetwork;
 
 import static android.view.View.GONE;
 import static android.view.View.VISIBLE;
+import static java.lang.Thread.sleep;
 
 /**
- * Created by aleksej on 12.10.2017.
+ * Created by aleksej
+ * on 12.10.2017.
  */
 
 public class FragmentNews extends Fragment {
@@ -46,6 +52,7 @@ public class FragmentNews extends Fragment {
     private FrameLayout mainFrame;
     private View noSignal;
     private RecyclerView rv;
+    private FloatingActionButton fabPeopleT;
 
     public FragmentNews() {
         color = R.color.news;
@@ -57,19 +64,35 @@ public class FragmentNews extends Fragment {
         final View view = inflater.inflate(R.layout.fragment_news, container, false);
         view.setBackgroundColor(getResources().getColor(color));
         initView(view);
-
         swipeToRefresh.setOnRefreshListener(() -> new LoadNews().execute());
 
         new LoadNews().execute();
 
+        fabPeopleT.setOnClickListener(v -> startActivity(new Intent(getActivity(), PeopleTActivity.class)));
+
         return view;
+
+    }
+
+    @Override
+    public void onStart() {
+        super.onStart();
+//        new Thread(() -> {
+//            try {
+//                sleep(1000);
+//            } catch (InterruptedException e) {
+//                e.printStackTrace();
+//            }
+//            getActivity().runOnUiThread(this::startAnimationFab);
+//        }).start();
+        startAnimationFab();
 
     }
 
     public void initView(View v) {
         rv = v.findViewById(R.id.fragment_news_recyclerView);
         adapter = new RVAdapterNews(getActivity());
-        rv.setHasFixedSize(false);
+        rv.setHasFixedSize(true);
         rv.setItemAnimator(new DefaultItemAnimator());
         rv.setLayoutManager(new LinearLayoutManager(getActivity()));
         rv.setAdapter(adapter);
@@ -79,6 +102,54 @@ public class FragmentNews extends Fragment {
 
         mainFrame = v.findViewById(R.id.fragment_news_mainFrame);
         noSignal = v.findViewById(R.id.fragment_news_no_connection);
+
+        fabPeopleT = v.findViewById(R.id.fragment_news_fab_people_t);
+    }
+
+    void startAnimationFab() {
+        fabPeopleT.clearAnimation();
+        fabPeopleT.animate().setStartDelay(1500).scaleX(1.1f).scaleY(1.1f).setDuration(200).setListener(new Animator.AnimatorListener() {
+            @Override
+            public void onAnimationStart(Animator animation) {
+
+            }
+
+            @Override
+            public void onAnimationEnd(Animator animation) {
+//                fabPeopleT.clearAnimation();
+                fabPeopleT.animate().setStartDelay(0).scaleY(1f).scaleX(1f).setListener(new Animator.AnimatorListener() {
+                    @Override
+                    public void onAnimationStart(Animator animation) {
+
+                    }
+
+                    @Override
+                    public void onAnimationEnd(Animator animation) {
+                        startAnimationFab();
+                    }
+
+                    @Override
+                    public void onAnimationCancel(Animator animation) {
+
+                    }
+
+                    @Override
+                    public void onAnimationRepeat(Animator animation) {
+
+                    }
+                }).start();
+            }
+
+            @Override
+            public void onAnimationCancel(Animator animation) {
+
+            }
+
+            @Override
+            public void onAnimationRepeat(Animator animation) {
+
+            }
+        }).start();
     }
 
     @SuppressLint("StaticFieldLeak")
@@ -91,13 +162,13 @@ public class FragmentNews extends Fragment {
         Elements newsURL;
         Elements newsPicture;
         Elements newsTitle;
-        itemNews[] arrayItemNews;
+        ItemNews[] arrayItemNews;
 
         @Override
         protected void onPreExecute() {
             super.onPreExecute();
             swipeToRefresh.setRefreshing(true);
-            if (myNetwork.isWorking(getActivity())) {
+            if (MyNetwork.isWorking(getActivity())) {
                 noSignal.setVisibility(GONE);
             } else {
                 noSignal.setVisibility(VISIBLE);
@@ -107,7 +178,7 @@ public class FragmentNews extends Fragment {
         @Override
         protected Void doInBackground(Void... voids) {
             try {
-                if (myNetwork.isWorking(getActivity())) {
+                if (MyNetwork.isWorking(getActivity())) {
                     document = Jsoup.connect(URL).get();
                     newsTitle = document.select("dd").select(".newsname");
                     newsGet = document.select("dd");
@@ -119,10 +190,10 @@ public class FragmentNews extends Fragment {
                     String LOG_ARGS = "FragmentNews";
                     Log.d(LOG_ARGS, String.valueOf(newsTitle.size()));
 
-                    arrayItemNews = new itemNews[newsTime.size()];
+                    arrayItemNews = new ItemNews[newsTime.size()];
 
                     for (int i1 = 0; i1 < arrayItemNews.length; i1++) {
-                        arrayItemNews[i1] = new itemNews();
+                        arrayItemNews[i1] = new ItemNews();
                     }
 
                     int i = 0;
@@ -181,10 +252,10 @@ public class FragmentNews extends Fragment {
         @Override
         protected void onPostExecute(Void aVoid) {
             super.onPostExecute(aVoid);
-            if (myNetwork.isWorking(getActivity())) {
+            if (MyNetwork.isWorking(getActivity())) {
                 rv.setVisibility(VISIBLE);
                 adapter.addArray(arrayItemNews);
-            }else {
+            } else {
                 rv.setVisibility(GONE);
             }
             progressBar.setVisibility(GONE);

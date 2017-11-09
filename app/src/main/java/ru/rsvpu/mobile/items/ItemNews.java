@@ -6,7 +6,7 @@ import android.graphics.Bitmap;
  * Created by aleksej on 10.08.16.
  * Recreated by aleksej on 11.10.17.
  */
-public class itemNews {
+public class ItemNews {
 
     private String date;
     private String title;
@@ -15,11 +15,11 @@ public class itemNews {
     private String url_news;
     private Bitmap picture;
 
-    public itemNews(){
+    public ItemNews(){
 
     }
 
-//    public itemNews(String date, String title, String news, String url_picture, String url_news, Bitmap picture) {
+//    public ItemNews(String date, String title, String news, String url_picture, String url_news, Bitmap picture) {
 //        this.date = date;
 //        this.title = title;
 //        this.news = news;

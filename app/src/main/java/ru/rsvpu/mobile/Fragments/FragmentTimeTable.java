@@ -26,7 +26,6 @@ import java.io.InputStreamReader;
 import java.lang.reflect.Type;
 import java.net.HttpURLConnection;
 import java.net.URL;
-import java.util.Calendar;
 import java.util.List;
 
 import ru.rsvpu.mobile.Adapters.RVAdapterTimeTable;
@@ -36,7 +35,7 @@ import ru.rsvpu.mobile.items.Container;
 import ru.rsvpu.mobile.items.DateUtil;
 import ru.rsvpu.mobile.items.SettingsHelper;
 import ru.rsvpu.mobile.items.TimeTableOneDay;
-import ru.rsvpu.mobile.items.myNetwork;
+import ru.rsvpu.mobile.items.MyNetwork;
 import ru.rsvpu.mobile.items.var;
 
 import static java.lang.Thread.sleep;
@@ -149,9 +148,9 @@ public class FragmentTimeTable extends Fragment {
         protected Void doInBackground(Void... voids) {
             Log.d(LOG_ARGS,"doInBackground");
 
-            network = myNetwork.isWorking(getActivity());
+            network = MyNetwork.isWorking(getActivity());
             if (network) {
-                urlValid = myNetwork.checkURL();
+                urlValid = MyNetwork.checkURL();
             }
 
             if (network && urlValid) {
