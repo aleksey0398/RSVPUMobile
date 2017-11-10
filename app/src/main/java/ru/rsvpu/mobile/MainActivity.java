@@ -20,6 +20,7 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.vk.sdk.VKSdk;
 
+import ru.rsvpu.mobile.Activity.PeopleTActivity;
 import ru.rsvpu.mobile.Activity.TutorialActivity;
 import ru.rsvpu.mobile.Fragments.FragmentAds;
 import ru.rsvpu.mobile.Fragments.FragmentNews;
@@ -28,6 +29,7 @@ import ru.rsvpu.mobile.Fragments.FragmentTimeTable;
 import ru.rsvpu.mobile.Services.SendToServerService;
 import ru.rsvpu.mobile.items.Container;
 import ru.rsvpu.mobile.items.DateUtil;
+import ru.rsvpu.mobile.items.ItemNewsPeopleT;
 import ru.rsvpu.mobile.items.SettingsHelper;
 import ru.rsvpu.mobile.items.var;
 
@@ -154,6 +156,12 @@ public class MainActivity extends AppCompatActivity {
         });
     }
 
+    @Override
+    protected void onStart() {
+        super.onStart();
+        PeopleTActivity.getDate(this);
+    }
+
     void sendStatisticToFirebase() {
         FirebaseDatabase firebaseDatabase = FirebaseDatabase.getInstance();
         DatabaseReference mReference = firebaseDatabase.getReference();
@@ -179,6 +187,7 @@ public class MainActivity extends AppCompatActivity {
         } catch (PackageManager.NameNotFoundException e) {
             e.printStackTrace();
         }
+
     }
 
     @SuppressLint("RestrictedApi")

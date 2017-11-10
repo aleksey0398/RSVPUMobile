@@ -1,6 +1,5 @@
 package ru.rsvpu.mobile.Activity;
 
-import android.annotation.SuppressLint;
 import android.app.AlarmManager;
 import android.app.PendingIntent;
 import android.content.Context;
@@ -26,7 +25,7 @@ import com.vk.sdk.api.VKError;
 import java.util.Calendar;
 
 import me.relex.circleindicator.CircleIndicator;
-import ru.rsvpu.mobile.Fragments.FragmentPage;
+import ru.rsvpu.mobile.Fragments.FragmentPageTutorial;
 import ru.rsvpu.mobile.MainActivity;
 import ru.rsvpu.mobile.R;
 import ru.rsvpu.mobile.CustomView.PresentationViewPager;
@@ -231,7 +230,7 @@ public class TutorialActivity extends AppCompatActivity {
 
         @Override
         public Fragment getItem(int position) {
-            return FragmentPage.newInstance(position);
+            return FragmentPageTutorial.newInstance(position);
         }
 
         @Override

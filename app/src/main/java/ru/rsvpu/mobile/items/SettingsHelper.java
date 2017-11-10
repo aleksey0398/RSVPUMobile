@@ -2,6 +2,8 @@ package ru.rsvpu.mobile.items;
 
 import android.content.Context;
 import android.content.SharedPreferences;
+import android.provider.ContactsContract;
+import android.util.Log;
 
 /**
  * Created by aleksej
@@ -22,7 +24,7 @@ public class SettingsHelper {
     }
 
     public void saveSelectedGroup(Container container, int typeOfGroup) {
-        System.out.println("Save settings:\n" + container.getAttr() + "\n" + container.getValue() + "\n" + container.getName() + "\n" + typeOfGroup);
+        Log.d("SaveSelectedGroup", "Save settings:\n" + container.getAttr() + "\n" + container.getValue() + "\n" + container.getName() + "\n" + typeOfGroup);
 
         editor.putInt(var.SETTINGS_type, typeOfGroup);
         editor.putString(var.SETTINGS_name, container.getName());
@@ -127,6 +129,48 @@ public class SettingsHelper {
 
     public void saveCheckedEvening(boolean check) {
         editor.putBoolean(var.SETTINGS_alarm_evening, check);
+    }
+
+    public void savePeopleTDataForNotification(String date1, String date2, String title, String message) {
+        editor.putString(var.SETTINGS_alarm_people_date1, date1);
+        editor.putString(var.SETTINGS_alarm_people_date2, date2);
+        editor.putString(var.SETTINGS_alarm_people_title, title);
+        editor.putString(var.SETTINGS_alarm_people_message, message);
+        editor.apply();
+    }
+
+    public String getPeopleTMessage() {
+        return setting.getString(var.SETTINGS_alarm_people_message, "-");
+    }
+
+    public String getPeopleTTitle() {
+        return setting.getString(var.SETTINGS_alarm_people_title, "-");
+    }
+
+    public String getPeopleDate1() {
+        return setting.getString(var.SETTINGS_alarm_people_date1, "-");
+    }
+
+    public String getPeopleDate2() {
+        return setting.getString(var.SETTINGS_alarm_people_date2, "-");
+    }
+
+    public void savePeopleNotificationId1(String id) {
+        editor.putString(var.SETTINGS_peoplet_id1, id);
+        editor.apply();
+    }
+
+    public void savePeopleNotificationId2(String id) {
+        editor.putString(var.SETTINGS_peoplet_id2, id);
+        editor.apply();
+    }
+
+    public String getPeopleNotificationId1() {
+        return String.valueOf(setting.getString(var.SETTINGS_peoplet_id1, "-"));
+    }
+
+    public String getPeopleNotificationId2() {
+        return setting.getString(var.SETTINGS_peoplet_id2, "-");
     }
 
     public boolean checkContains(String args) {

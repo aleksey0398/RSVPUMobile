@@ -21,9 +21,10 @@ import ru.rsvpu.mobile.R;
  * on 02.11.2017.
  */
 
-public class FragmentPage extends Fragment {
+public class FragmentPageTutorial extends Fragment {
 
     static final String ARGUMENT_PAGE_NUMBER = "arg_page_number";
+
     static final int[] pictures = {
             R.drawable.logo_512,
             R.drawable.ic_tutorial_speed,
@@ -40,20 +41,17 @@ public class FragmentPage extends Fragment {
     };
 
     private static final String[] sMyScope = new String[]{
-            VKScope.FRIENDS,
-            VKScope.WALL,
             VKScope.PHOTOS,
             VKScope.NOHTTPS,
-            VKScope.MESSAGES,
             VKScope.DOCS
     };
 
-    private final String LOG_ARGS = "FragmentPage";
+    private final String LOG_ARGS = "FragmentPageTutorial";
     private ImageView image;
     private TextView txtTitle;
 
-    public static FragmentPage newInstance(int page) {
-        FragmentPage pageFragment = new FragmentPage();
+    public static FragmentPageTutorial newInstance(int page) {
+        FragmentPageTutorial pageFragment = new FragmentPageTutorial();
         Bundle arguments = new Bundle();
         arguments.putInt(ARGUMENT_PAGE_NUMBER, page);
         pageFragment.setArguments(arguments);

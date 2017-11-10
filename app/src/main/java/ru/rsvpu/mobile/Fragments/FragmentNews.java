@@ -53,6 +53,7 @@ public class FragmentNews extends Fragment {
     private View noSignal;
     private RecyclerView rv;
     private FloatingActionButton fabPeopleT;
+    private String LOG_ARGS = "FragmentNews";
 
     public FragmentNews() {
         color = R.color.news;
@@ -72,6 +73,18 @@ public class FragmentNews extends Fragment {
 
         return view;
 
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+//        startAnimationFab();
+    }
+
+    @Override
+    public void onPause() {
+        super.onPause();
+//        fabPeopleT.clearAnimation();
     }
 
     @Override
@@ -107,6 +120,8 @@ public class FragmentNews extends Fragment {
     }
 
     void startAnimationFab() {
+        fabPeopleT.setScaleX(1.0f);
+        fabPeopleT.setScaleY(1.0f);
         fabPeopleT.clearAnimation();
         fabPeopleT.animate().setStartDelay(1500).scaleX(1.1f).scaleY(1.1f).setDuration(200).setListener(new Animator.AnimatorListener() {
             @Override
@@ -117,6 +132,8 @@ public class FragmentNews extends Fragment {
             @Override
             public void onAnimationEnd(Animator animation) {
 //                fabPeopleT.clearAnimation();
+                fabPeopleT.setScaleX(1.1f);
+                fabPeopleT.setScaleY(1.1f);
                 fabPeopleT.animate().setStartDelay(0).scaleY(1f).scaleX(1f).setListener(new Animator.AnimatorListener() {
                     @Override
                     public void onAnimationStart(Animator animation) {

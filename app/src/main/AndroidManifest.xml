@@ -75,11 +75,18 @@
         <activity
             android:name=".Activity.SettingActivity"
             android:label="@string/title_activity_setting"
+            android:screenOrientation="portrait"
             android:theme="@style/AppTheme.NoActionBar" />
+
         <activity
             android:name=".Activity.PeopleTActivity"
             android:label="@string/title_activity_people_t"
+            android:screenOrientation="portrait"
             android:theme="@style/AppTheme.NoActionBar"></activity>
+
+        <receiver
+            android:name=".Services.PeopleTNotification"
+            android:enabled="true" />
     </application>
 
 </manifest>

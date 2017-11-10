@@ -6,6 +6,7 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.util.Log;
 
+import ru.rsvpu.mobile.Activity.PeopleTActivity;
 import ru.rsvpu.mobile.Activity.TutorialActivity;
 import ru.rsvpu.mobile.items.var;
 
@@ -25,5 +26,6 @@ public class DeviceStartBroadcast extends BroadcastReceiver {
             TutorialActivity.setAlarm(context, false);
             TutorialActivity.setAlarmPair(context, false);
         }
+        PeopleTActivity.getDate(context);
     }
 }

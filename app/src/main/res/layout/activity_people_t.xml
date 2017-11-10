@@ -4,6 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@color/colorPrimary"
     tools:context="ru.rsvpu.mobile.Activity.PeopleTActivity">
 
     <android.support.design.widget.AppBarLayout
@@ -19,6 +20,19 @@
             app:popupTheme="@style/AppTheme.NoActionBar.PopupOverlay" />
 
     </android.support.design.widget.AppBarLayout>
+
+    <ImageView
+        android:alpha="0.7"
+        android:src="@drawable/ic_people_t_white_512"
+        android:layout_margin="50dp"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent" />
+
+    <ProgressBar
+        android:id="@+id/activity_people_progress"
+        android:layout_gravity="center"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content" />
 
     <include layout="@layout/content_people_t" />
 
