@@ -9,8 +9,11 @@ public class var {
 
     public static boolean changeGroup = false;
 
-    public static final String url = "http://92.248.221.177:8765/";
+//    public static final String url = "http://92.248.221.177:8765/";
 //    public static final String url = "http://192.168.1.50:8765/";
+    public static final String url = "http://192.168.1.169:8765/";
+
+    public static final int FIVE_DAY = 1000*60*60*24*5;
 
     public static final String SETTINGS_MAIN = "SETTINGS MAIN";
 
@@ -30,12 +33,12 @@ public class var {
 
     static final String SETTINGS_alarm_evening = "save_alarm_evening";
     static final String SETTINGS_alarm_day = "save_alarm_day";
+    static final String SETTINGS_alarm_people = "save_alarm_people";
 
     public static final String SETTINGS_alarm_people_date1 = "save_alarm_people_date1";
     public static final String SETTINGS_alarm_people_date2 = "save_alarm_people_date2";
     public static final String SETTINGS_alarm_people_title = "save_alarm_people_message";
     public static final String SETTINGS_alarm_people_message = "save_alarm_people_title";
 
-    static final String SETTINGS_peoplet_id1 = "save_people_id2";
-    static final String SETTINGS_peoplet_id2 = "save_people_id1";
+    public static final String SETTINGS_vk_lastupdate = "last_update_server";
 }

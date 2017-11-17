@@ -87,9 +87,9 @@ public class DayAlarmReceiver extends BroadcastReceiver {
         Log.d(LOG_ARGS, LOG_ARGS);
         setHoursMinutes(context);
         setTimeStart();
-        Log.d(LOG_ARGS,"Time: "+String.valueOf((System.currentTimeMillis() - timeStart)));
-        Log.d(LOG_ARGS,"15 min: "+String.valueOf((1000*60*15)));
-        Log.d(LOG_ARGS,"15 is over? : "+String.valueOf((System.currentTimeMillis() - timeStart)>(1000*60*15)));
+        Log.d(LOG_ARGS, "Time: " + String.valueOf((System.currentTimeMillis() - timeStart)));
+        Log.d(LOG_ARGS, "15 min: " + String.valueOf((1000 * 60 * 15)));
+        Log.d(LOG_ARGS, "15 is over? : " + String.valueOf((System.currentTimeMillis() - timeStart) > (1000 * 60 * 15)));
 
         if ((System.currentTimeMillis() - timeStart) < (1000 * 60 * 15)) {
             try {
@@ -141,7 +141,7 @@ public class DayAlarmReceiver extends BroadcastReceiver {
                 .setAutoCancel(true)
                 .setContentTitle("Следующая пара в " + nextLesson.timeStart)
                 .setSmallIcon(R.drawable.ic_next_notification)
-                .setLargeIcon(BitmapFactory.decodeResource(context.getResources(),R.mipmap.ic_launcher,null))
+                .setLargeIcon(BitmapFactory.decodeResource(context.getResources(), R.mipmap.ic_launcher, null))
                 .setDefaults(Notification.DEFAULT_ALL)
                 .setContentText(new SettingsHelper(context).getSettings().getName())
                 .setStyle(new NotificationCompat.BigTextStyle().bigText(title));
@@ -157,20 +157,20 @@ public class DayAlarmReceiver extends BroadcastReceiver {
             if (nextLesson.lessonsName.get(0).equals("-")) {
                 return null;
             } else {
-                titleForMessage = nextLesson.typeOfLesson.get(0)+"\n";
+                titleForMessage = nextLesson.typeOfLesson.get(0) + "\n";
                 titleForMessage += nextLesson.lessonsName.get(0) + "\nКабинет: " + nextLesson.classrooms.get(0).name;
                 if (nextLesson.numberOfGroup.get(0) != null) {
-                    titleForMessage +=" " +nextLesson.numberOfGroup.get(0);
+                    titleForMessage += " " + nextLesson.numberOfGroup.get(0);
                 }
                 titleForMessage += "\n" + nextLesson.teachers.get(0).name;
             }
         } else {
-            titleForMessage = nextLesson.typeOfLesson.get(0)+"\n";
+            titleForMessage = nextLesson.typeOfLesson.get(0) + "\n";
             titleForMessage += nextLesson.lessonsName.get(0) + "\nКабинет: " + nextLesson.classrooms.get(0).name;
             titleForMessage += " у " + nextLesson.numberOfGroup.get(0);
-            titleForMessage += "\n" + nextLesson.teachers.get(0).name+"\n";
+            titleForMessage += "\n" + nextLesson.teachers.get(0).name + "\n";
 
-            titleForMessage += nextLesson.typeOfLesson.get(1)+"\n";
+            titleForMessage += nextLesson.typeOfLesson.get(1) + "\n";
             titleForMessage += nextLesson.lessonsName.get(1) + "\nКабинет: " + nextLesson.classrooms.get(1).name;
             titleForMessage += " у " + nextLesson.numberOfGroup.get(1) + "\n";
             titleForMessage += "\n" + nextLesson.teachers.get(1).name;

@@ -372,7 +372,7 @@ public class FragmentSettings extends Fragment {
             urlValid = MyNetwork.checkURL();
             if (network && urlValid) {
                 try {
-                    URL url = new URL(var.url + (selectedType != 0 ? "getAllZaochnoe" : "getAllOchnoe"));
+                    URL url = new URL(var.url + (selectedType != 0 ? "getAllZaochnoe" : "getAllOchnoe")+MyNetwork.additionForStatistic(getContext()));
                     urlConnection = (HttpURLConnection) url.openConnection();
                     urlConnection.setRequestMethod("GET");
                     urlConnection.connect();

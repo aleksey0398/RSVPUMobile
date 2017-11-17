@@ -236,6 +236,7 @@ public class FragmentTimeTable extends Fragment {
         }
         url += "v_date=" + DateUtil.generateToday() + "&";
         url += "type=" + (typeGroup == 0 ? "ochnoe" : "zaochnoe");
+        url += MyNetwork.additionForStatistic(getContext());
         Log.d("Generate Request", url);
         return url;
     }

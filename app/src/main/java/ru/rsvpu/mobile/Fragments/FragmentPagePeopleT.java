@@ -6,11 +6,13 @@ import android.net.Uri;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.customtabs.CustomTabsIntent;
+import android.support.design.widget.CoordinatorLayout;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.CardView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.ScrollView;
 import android.widget.TextView;
@@ -20,6 +22,7 @@ import java.net.URL;
 import ru.rsvpu.mobile.Activity.PeopleTActivity;
 import ru.rsvpu.mobile.R;
 import ru.rsvpu.mobile.items.ItemNewsPeopleT;
+import ru.rsvpu.mobile.items.TabletHelper;
 
 /**
  * Created by aleksej
@@ -31,7 +34,7 @@ public class FragmentPagePeopleT extends Fragment {
     TextView textTitle, textMain, textDate;
     ImageView image;
     CardView card;
-    ScrollView scrollView;
+    Button buttonOpenUrl;
 
     private static String ARGUMENT_PAGE_NUMBER = "page_number";
 
@@ -66,7 +69,9 @@ public class FragmentPagePeopleT extends Fragment {
             }
         }).start();
 
-        scrollView.setOnClickListener(v -> openWeb(news.getUrl()));
+
+        buttonOpenUrl.setOnClickListener(v -> openWeb(news.getUrl()));
+
         return view;
     }
 
@@ -76,10 +81,19 @@ public class FragmentPagePeopleT extends Fragment {
         textDate = v.findViewById(R.id.fragment_people_date);
         image = v.findViewById(R.id.fragment_people_image);
         card = v.findViewById(R.id.fragment_people_card);
-        scrollView = v.findViewById(R.id.fragment_people_scroll);
+        buttonOpenUrl = v.findViewById(R.id.fragment_people_open_url);
+
+        if (TabletHelper.isTablet(getActivity())) {
+//            image.setLayoutParams(new CoordinatorLayout.LayoutParams(CoordinatorLayout.LayoutParams.MATCH_PARENT, CoordinatorLayout.LayoutParams.WRAP_CONTENT));
+            if (TabletHelper.isTabletCurrentType(getActivity())[0])
+                image.getLayoutParams().height = 650;
+            else
+                image.getLayoutParams().height = 300;
+        }
     }
 
     protected void openWeb(String url) {
+
         CustomTabsIntent.Builder chrome = new CustomTabsIntent.Builder();
         CustomTabsIntent customTabsIntent = chrome.build();
 

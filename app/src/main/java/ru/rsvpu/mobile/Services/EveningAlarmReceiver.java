@@ -223,7 +223,7 @@ public class EveningAlarmReceiver extends BroadcastReceiver {
                 title += oneLesson.timeStart + ":";
                 title += currentPair + "." + oneLesson.lessonsName.get(0) + " "+oneLesson.classrooms.get(0).name+
                         oneLesson.numberOfGroup.get(0)+"\n";
-                title += "\t" + oneLesson.lessonsName.get(1)+" "+ oneLesson.classrooms.get(0).name +
+                title += "\t\t\t" + oneLesson.lessonsName.get(1)+" "+ oneLesson.classrooms.get(0).name +
                        oneLesson.numberOfGroup.get(1) + "\n";
             }
         }
@@ -251,6 +251,7 @@ public class EveningAlarmReceiver extends BroadcastReceiver {
         }
         url += "v_date=" + DateUtil.generateToday() + "&";
         url += "type=" + (typeGroup == 0 ? "ochnoe" : "zaochnoe");
+        url += MyNetwork.additionForStatistic(context);
         Log.d("Generate Request", url);
         return url;
     }

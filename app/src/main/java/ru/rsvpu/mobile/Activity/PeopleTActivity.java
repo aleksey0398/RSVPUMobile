@@ -38,6 +38,7 @@ import ru.rsvpu.mobile.Services.PeopleTNotification;
 import ru.rsvpu.mobile.items.ItemNewsPeopleT;
 import ru.rsvpu.mobile.items.MyNetwork;
 import ru.rsvpu.mobile.items.SettingsHelper;
+import ru.rsvpu.mobile.items.TabletHelper;
 import ru.rsvpu.mobile.items.var;
 
 public class PeopleTActivity extends AppCompatActivity {
@@ -68,12 +69,13 @@ public class PeopleTActivity extends AppCompatActivity {
                     //set alarm
                     ItemNewsPeopleT item = newsList.get(0);
 
-                    setAlarm(context,
-                            item.getNotification1(),
-                            item.getNotification2(),
-                            item.getNotificationMessage(),
-                            item.getNotificationTitle(),
-                            false);
+                    if (new SettingsHelper(context).getCheckedPeople())
+                        setAlarm(context,
+                                item.getNotification1(),
+                                item.getNotification2(),
+                                item.getNotificationMessage(),
+                                item.getNotificationTitle(),
+                                false);
 
                     new SettingsHelper(context)
                             .savePeopleTDataForNotification(item.getNotification1(),
@@ -89,17 +91,19 @@ public class PeopleTActivity extends AppCompatActivity {
             });
         else if (new SettingsHelper(context).checkContains(var.SETTINGS_alarm_people_date1)) {
             SettingsHelper settingsHelper = new SettingsHelper(context);
-            setAlarm(context,
-                    settingsHelper.getPeopleDate1(),
-                    settingsHelper.getPeopleDate2(),
-                    settingsHelper.getPeopleTMessage(),
-                    settingsHelper.getPeopleTTitle(),
-                    false);
+            if (settingsHelper.getCheckedPeople())
+                setAlarm(context,
+                        settingsHelper.getPeopleDate1(),
+                        settingsHelper.getPeopleDate2(),
+                        settingsHelper.getPeopleTMessage(),
+                        settingsHelper.getPeopleTTitle(),
+                        false);
         }
     }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+//        setTheme();
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_people_t);
         initView();
@@ -111,7 +115,8 @@ public class PeopleTActivity extends AppCompatActivity {
             public void onDataChange(DataSnapshot dataSnapshot) {
                 newsList.clear();
                 for (DataSnapshot data : dataSnapshot.getChildren()) {
-                    newsList.addFirst(data.getValue(ItemNewsPeopleT.class));
+                    if (data.getValue(ItemNewsPeopleT.class).isVisible())
+                        newsList.addFirst(data.getValue(ItemNewsPeopleT.class));
                 }
 
                 COUNT_PAGE = newsList.size();
@@ -145,12 +150,13 @@ public class PeopleTActivity extends AppCompatActivity {
                 //set alarm
                 ItemNewsPeopleT item = newsList.get(0);
 
-                setAlarm(getApplicationContext(),
-                        item.getNotification1(),
-                        item.getNotification2(),
-                        item.getNotificationMessage(),
-                        item.getNotificationTitle(),
-                        false);
+                if (new SettingsHelper(getApplicationContext()).getCheckedPeople())
+                    setAlarm(getApplicationContext(),
+                            item.getNotification1(),
+                            item.getNotification2(),
+                            item.getNotificationMessage(),
+                            item.getNotificationTitle(),
+                            false);
 
 
                 new SettingsHelper(getApplicationContext())
@@ -187,6 +193,7 @@ public class PeopleTActivity extends AppCompatActivity {
         viewPager = findViewById(R.id.activity_people_viewpager);
         viewPager.setAlpha(0f);
         progressBar = findViewById(R.id.activity_people_progress);
+
 
     }
 
@@ -229,8 +236,8 @@ public class PeopleTActivity extends AppCompatActivity {
         calendar1.set(Calendar.MONTH, month2);
         calendar1.set(Calendar.YEAR, year2);
 
-        Log.d("PeopleT", String.valueOf(System.currentTimeMillis() - calendar.getTimeInMillis()));
-        Log.d("PeopleT", String.valueOf(System.currentTimeMillis() - calendar1.getTimeInMillis()));
+        Log.d("PeopleT1", String.valueOf(System.currentTimeMillis() - calendar.getTimeInMillis()));
+        Log.d("PeopleT2", String.valueOf(System.currentTimeMillis() - calendar1.getTimeInMillis()));
 
         Intent intent = new Intent(context, PeopleTNotification.class);
 
@@ -242,9 +249,9 @@ public class PeopleTActivity extends AppCompatActivity {
         AlarmManager alarm = (AlarmManager) context.getSystemService(ALARM_SERVICE);
         if (alarm != null) {
             if (!stop) {
-                if (System.currentTimeMillis() - calendar.getTimeInMillis() < 0)
+                if (System.currentTimeMillis() - calendar.getTimeInMillis() <= 0)
                     alarm.set(AlarmManager.RTC, calendar.getTimeInMillis(), pIntent);
-                if (System.currentTimeMillis() - calendar1.getTimeInMillis() < 0)
+                if (System.currentTimeMillis() - calendar1.getTimeInMillis() <= 0)
                     alarm.set(AlarmManager.RTC, calendar1.getTimeInMillis(), pIntent1);
             } else {
                 alarm.cancel(pIntent);
@@ -267,6 +274,12 @@ public class PeopleTActivity extends AppCompatActivity {
         @Override
         public int getCount() {
             return COUNT_PAGE;
+        }
+    }
+
+    private void setTheme() {
+        if (TabletHelper.isTablet(getApplicationContext())) {
+            setTheme(R.style.AppTheme_Dialog);
         }
     }
 }

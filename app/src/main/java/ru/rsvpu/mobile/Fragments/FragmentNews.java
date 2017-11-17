@@ -10,8 +10,10 @@ import android.support.design.widget.FloatingActionButton;
 import android.support.v4.app.Fragment;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.DefaultItemAnimator;
+import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.support.v7.widget.StaggeredGridLayoutManager;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -31,6 +33,7 @@ import ru.rsvpu.mobile.Adapters.RVAdapterNews;
 import ru.rsvpu.mobile.R;
 import ru.rsvpu.mobile.items.ItemNews;
 import ru.rsvpu.mobile.items.MyNetwork;
+import ru.rsvpu.mobile.items.TabletHelper;
 
 import static android.view.View.GONE;
 import static android.view.View.VISIBLE;
@@ -70,6 +73,7 @@ public class FragmentNews extends Fragment {
         new LoadNews().execute();
 
         fabPeopleT.setOnClickListener(v -> startActivity(new Intent(getActivity(), PeopleTActivity.class)));
+        startAnimationFab();
 
         return view;
 
@@ -79,12 +83,14 @@ public class FragmentNews extends Fragment {
     public void onResume() {
         super.onResume();
 //        startAnimationFab();
+        Log.d(LOG_ARGS, "onResume");
     }
 
     @Override
     public void onPause() {
         super.onPause();
-//        fabPeopleT.clearAnimation();
+        Log.d(LOG_ARGS,"onPause");
+//        fabPeopleT = getActivity().findViewById(R.id.fragment_news_fab_people_t);
     }
 
     @Override
@@ -98,8 +104,9 @@ public class FragmentNews extends Fragment {
 //            }
 //            getActivity().runOnUiThread(this::startAnimationFab);
 //        }).start();
-        startAnimationFab();
+//        startAnimationFab();
 
+        Log.d(LOG_ARGS,"onStart");
     }
 
     public void initView(View v) {
@@ -107,7 +114,7 @@ public class FragmentNews extends Fragment {
         adapter = new RVAdapterNews(getActivity());
         rv.setHasFixedSize(true);
         rv.setItemAnimator(new DefaultItemAnimator());
-        rv.setLayoutManager(new LinearLayoutManager(getActivity()));
+        rv.setLayoutManager(new GridLayoutManager(getActivity(), TabletHelper.getDisplayColumns(getActivity())));
         rv.setAdapter(adapter);
 
         progressBar = v.findViewById(R.id.fragment_news_progressBar);

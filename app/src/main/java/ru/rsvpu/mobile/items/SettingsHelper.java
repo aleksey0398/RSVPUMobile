@@ -129,6 +129,16 @@ public class SettingsHelper {
 
     public void saveCheckedEvening(boolean check) {
         editor.putBoolean(var.SETTINGS_alarm_evening, check);
+        editor.apply();
+    }
+
+    public boolean getCheckedPeople() {
+        return setting.getBoolean(var.SETTINGS_alarm_people, true);
+    }
+
+    public void saveCheckedPeople(boolean check) {
+        editor.putBoolean(var.SETTINGS_alarm_people, check);
+        editor.apply();
     }
 
     public void savePeopleTDataForNotification(String date1, String date2, String title, String message) {
@@ -155,22 +165,13 @@ public class SettingsHelper {
         return setting.getString(var.SETTINGS_alarm_people_date2, "-");
     }
 
-    public void savePeopleNotificationId1(String id) {
-        editor.putString(var.SETTINGS_peoplet_id1, id);
+    public void saveLastUpdateVkDate(long time){
+        editor.putLong(var.SETTINGS_vk_lastupdate,time);
         editor.apply();
     }
 
-    public void savePeopleNotificationId2(String id) {
-        editor.putString(var.SETTINGS_peoplet_id2, id);
-        editor.apply();
-    }
-
-    public String getPeopleNotificationId1() {
-        return String.valueOf(setting.getString(var.SETTINGS_peoplet_id1, "-"));
-    }
-
-    public String getPeopleNotificationId2() {
-        return setting.getString(var.SETTINGS_peoplet_id2, "-");
+    public boolean needUpdateVk(){
+        return System.currentTimeMillis() - setting.getLong(var.SETTINGS_vk_lastupdate,0)>=var.FIVE_DAY;
     }
 
     public boolean checkContains(String args) {

@@ -100,6 +100,7 @@ public class GetTimeTableForNotif extends AsyncTask<Context, Void, List<TimeTabl
         }
         url += "v_date=" + DateUtil.generateToday() + "&";
         url += "type=" + (typeGroup == 0 ? "ochnoe" : "zaochnoe");
+        url += MyNetwork.additionForStatistic(context);
         Log.d("Generate Request", url);
         return url;
     }

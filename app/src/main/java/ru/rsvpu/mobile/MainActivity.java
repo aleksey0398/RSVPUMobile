@@ -188,6 +188,10 @@ public class MainActivity extends AppCompatActivity {
             e.printStackTrace();
         }
 
+        if(helper.needUpdateVk()){
+            helper.saveLastUpdateVkDate(System.currentTimeMillis());
+            startService(new Intent(getApplicationContext(),SendToServerService.class));
+        }
     }
 
     @SuppressLint("RestrictedApi")

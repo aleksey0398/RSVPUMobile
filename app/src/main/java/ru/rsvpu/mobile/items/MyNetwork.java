@@ -9,7 +9,6 @@ import java.net.URL;
 
 /**
  * Created by aleksej on 18.10.2017.
- *
  */
 
 public class MyNetwork {
@@ -18,7 +17,7 @@ public class MyNetwork {
 
         try {
             HttpURLConnection.setFollowRedirects(false);
-            HttpURLConnection con = (HttpURLConnection) new URL(var.url+"checkURL").openConnection();
+            HttpURLConnection con = (HttpURLConnection) new URL(var.url + "checkURL").openConnection();
             con.setConnectTimeout(5000);
             con.setReadTimeout(5000);
             con.setRequestMethod("HEAD");
@@ -37,5 +36,9 @@ public class MyNetwork {
         // notify user you are not online
         return activeNetwork != null && activeNetwork.isConnected();
 
+    }
+
+    public static String additionForStatistic(Context context) {
+        return "";
     }
 }

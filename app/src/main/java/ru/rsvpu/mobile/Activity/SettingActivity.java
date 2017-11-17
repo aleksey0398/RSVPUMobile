@@ -35,11 +35,12 @@ import java.net.URL;
 
 import ru.rsvpu.mobile.R;
 import ru.rsvpu.mobile.items.SettingsHelper;
+import ru.rsvpu.mobile.items.TabletHelper;
 
 public class SettingActivity extends AppCompatActivity {
 
     ImageView imageAvatar;
-    Switch switchEvening, switchDay;
+    Switch switchEvening, switchDay, switchPeople;
     Button buttonExit;
     Toolbar toolbar;
     TextView textName, textSurname;
@@ -49,6 +50,7 @@ public class SettingActivity extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+//        setTheme();
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_setting);
         initView();
@@ -106,6 +108,17 @@ public class SettingActivity extends AppCompatActivity {
                 TutorialActivity.setAlarmPair(getApplicationContext(), true);
             }
         }));
+
+        switchPeople.setOnCheckedChangeListener(((buttonView, isChecked) -> {
+            SettingsHelper helper = new SettingsHelper(getApplicationContext());
+            helper.saveCheckedPeople(isChecked);
+
+            if (isChecked) {
+                PeopleTActivity.setAlarm(getApplicationContext(), helper.getPeopleDate1(), helper.getPeopleDate2(), helper.getPeopleTMessage(), helper.getPeopleTTitle(), false);
+            } else {
+                PeopleTActivity.setAlarm(getApplicationContext(), helper.getPeopleDate1(), helper.getPeopleDate2(), helper.getPeopleTMessage(), helper.getPeopleTTitle(), true);
+            }
+        }));
     }
 
 
@@ -129,6 +142,7 @@ public class SettingActivity extends AppCompatActivity {
         imageAvatar = findViewById(R.id.activity_setting_img);
         switchDay = findViewById(R.id.activity_setting_switch_notification_day);
         switchEvening = findViewById(R.id.activity_setting_switch_notification_evening);
+        switchPeople = findViewById(R.id.activity_setting_switch_notification_people);
         buttonExit = findViewById(R.id.activity_setting_button_exit);
         textName = findViewById(R.id.activity_setting_text_name);
         textSurname = findViewById(R.id.activity_setting_text_surname);
@@ -136,6 +150,11 @@ public class SettingActivity extends AppCompatActivity {
         SettingsHelper settings = new SettingsHelper(getApplicationContext());
         switchDay.setChecked(settings.getCheckedDay());
         switchEvening.setChecked(settings.getCheckedEvening());
+        switchPeople.setChecked(settings.getCheckedPeople());
     }
-
+    void setTheme(){
+        if(TabletHelper.isTablet(getApplicationContext())){
+            setTheme(R.style.AppTheme_Dialog);
+        }
+    }
 }

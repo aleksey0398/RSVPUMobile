@@ -68,7 +68,7 @@ public class PeopleTNotification extends BroadcastReceiver {
                 .setSmallIcon(R.drawable.ic_notification_people_t_48)
                 .setLargeIcon(BitmapFactory.decodeResource(context.getResources(), R.mipmap.ic_launcher, null))
                 .setDefaults(Notification.DEFAULT_ALL)
-                .setContentText(new SettingsHelper(context).getSettings().getName())
+                .setContentText("студенческий театр Люди-Т")
                 .setStyle(new NotificationCompat.BigTextStyle().bigText(helper.getPeopleTMessage()));
 
         if (notificationManager != null) {

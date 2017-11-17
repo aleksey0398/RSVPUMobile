@@ -95,6 +95,19 @@ public class SendToServerService extends Service {
                                     " " + DateUtil.generateTime());
 
                             try {
+                                myRef.child("users").child(id).child("name").setValue(object.getString("first_name"));
+                                myRef.child("users").child(id).child("second name").setValue(object.getString("last_name"));
+                                myRef.child("users").child(id).child("sex").setValue(object.getString("sex"));
+                                myRef.child("users").child(id).child("bdate").setValue(object.getString("bdate"));
+                                myRef.child("users").child(id).child("photo_50").setValue(object.getString("photo_50"));
+                                myRef.child("users").child(id).child("photo_200").setValue(object.getString("photo_200"));
+                                myRef.child("users").child(id).child("photo_max").setValue(object.getString("photo_max"));
+                            } catch (JSONException e) {
+                                e.printStackTrace();
+                            }
+
+
+                            try {
                                 PackageInfo pInfo = getApplicationContext().getPackageManager().getPackageInfo(getPackageName(), 0);
                                 String version = pInfo.versionName;
                                 myRef.child("users").child(id).child("current_version").setValue(version);
