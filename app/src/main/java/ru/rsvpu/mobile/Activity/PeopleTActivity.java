@@ -51,6 +51,7 @@ public class PeopleTActivity extends AppCompatActivity {
     public static LinkedList<ItemNewsPeopleT> newsList = new LinkedList<>();
     static FirebaseDatabase firebaseDatabase;
     static DatabaseReference mRef;
+    private String LOG_ARGS = "Tutorial_Activity";
 
     public static void getDate(Context context) {
         firebaseDatabase = FirebaseDatabase.getInstance();
@@ -67,15 +68,19 @@ public class PeopleTActivity extends AppCompatActivity {
                     }
 
                     //set alarm
+                    if (newsList.size() == 0)
+                        return;
+
                     ItemNewsPeopleT item = newsList.get(0);
 
-                    if (new SettingsHelper(context).getCheckedPeople())
+                    if (new SettingsHelper(context).getCheckedPeople()) {
                         setAlarm(context,
                                 item.getNotification1(),
                                 item.getNotification2(),
                                 item.getNotificationMessage(),
                                 item.getNotificationTitle(),
                                 false);
+                    }
 
                     new SettingsHelper(context)
                             .savePeopleTDataForNotification(item.getNotification1(),
@@ -148,6 +153,9 @@ public class PeopleTActivity extends AppCompatActivity {
                 }).start();
 
                 //set alarm
+                if(newsList.size() == 0)
+                    return;
+
                 ItemNewsPeopleT item = newsList.get(0);
 
                 if (new SettingsHelper(getApplicationContext()).getCheckedPeople())
@@ -194,6 +202,7 @@ public class PeopleTActivity extends AppCompatActivity {
         viewPager.setAlpha(0f);
         progressBar = findViewById(R.id.activity_people_progress);
 
+//        Log.d(LOG_ARGS,)
 
     }
 

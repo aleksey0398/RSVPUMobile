@@ -3,6 +3,7 @@ package ru.rsvpu.mobile.Adapters;
 import android.annotation.SuppressLint;
 import android.content.Context;
 import android.support.v7.widget.RecyclerView;
+import android.text.Html;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -54,7 +55,7 @@ public class RVAdapterTimeTable extends RecyclerView.Adapter<RVAdapterTimeTable.
         TimeTableOneDay timeTable = lessons.get(position);
         holder.txt_date.setText(timeTable.dayOfTheWeek + " " + timeTable.date);
 //        Log.d(LOG_ARGS,DateUtil.generateToday());
-        if(DateUtil.generateToday().equals(timeTable.date)){
+        if (DateUtil.generateToday().equals(timeTable.date)) {
             holder.txt_date.setTextColor(context.getResources().getColor(R.color.todayColor));
         } else {
             holder.txt_date.setTextColor(context.getResources().getColor(android.R.color.white));
@@ -101,7 +102,7 @@ public class RVAdapterTimeTable extends RecyclerView.Adapter<RVAdapterTimeTable.
 
             if (lesson.lessonsName.size() < 2) {
 
-                setTypeColor(holder.txt_type[i*2],lesson.typeOfLesson.get(0));
+                setTypeColor(holder.txt_type[i * 2], lesson.typeOfLesson.get(0));
                 holder.txt_type[i * 2].setText(lesson.typeOfLesson.get(0));
                 holder.txt_title[i * 2].setText(lesson.lessonsName.get(0));
 
@@ -120,36 +121,36 @@ public class RVAdapterTimeTable extends RecyclerView.Adapter<RVAdapterTimeTable.
                     holder.txt_class[i * 2].setText(classString.substring(0, (classString.length() - 2)));
 
                 if (lesson.numberOfGroup.size() > 0 && lesson.numberOfGroup.get(0) != null) {
-                    holder.txt_class[i * 2].setText(holder.txt_class[i * 2].getText() + " " + lesson.numberOfGroup.get(0));
+                    holder.txt_class[i * 2].setText(Html.fromHtml(holder.txt_class[i * 2].getText() + " <b>" + lesson.numberOfGroup.get(0) + "</b>"));
                 }
 
                 holder.second_linear_layout[i].setVisibility(GONE);
             } else {
-                setTypeColor(holder.txt_type[i*2],lesson.typeOfLesson.get(0));
-                setTypeColor(holder.txt_type[i*2+1],lesson.typeOfLesson.get(1));
+                setTypeColor(holder.txt_type[i * 2], lesson.typeOfLesson.get(0));
+                setTypeColor(holder.txt_type[i * 2 + 1], lesson.typeOfLesson.get(1));
                 holder.txt_type[i * 2].setText(lesson.typeOfLesson.get(0));
                 holder.txt_type[i * 2 + 1].setText(lesson.typeOfLesson.get(1));
                 holder.second_linear_layout[i].setVisibility(VISIBLE);
 
-                holder.txt_class[i*2].setText(lesson.classrooms.get(0).name);
-                holder.txt_class[i*2+1].setText(lesson.classrooms.get(1).name);
+                holder.txt_class[i * 2].setText(lesson.classrooms.get(0).name);
+                holder.txt_class[i * 2 + 1].setText(lesson.classrooms.get(1).name);
 
-                holder.txt_teacher[i*2].setText(lesson.teachers.get(0).name);
-                holder.txt_teacher[i*2+1].setText(lesson.teachers.get(1).name);
+                holder.txt_teacher[i * 2].setText(lesson.teachers.get(0).name);
+                holder.txt_teacher[i * 2 + 1].setText(lesson.teachers.get(1).name);
 
-                holder.txt_title[i*2].setText(lesson.lessonsName.get(0));
-                holder.txt_title[i*2+1].setText(lesson.lessonsName.get(1));
+                holder.txt_title[i * 2].setText(lesson.lessonsName.get(0));
+                holder.txt_title[i * 2 + 1].setText(lesson.lessonsName.get(1));
 
-                holder.txt_class[i*2].setText(holder.txt_class[i*2].getText()+" "+ lesson.numberOfGroup.get(0));
-                holder.txt_class[i*2+1].setText(holder.txt_class[i*2+1].getText()+" "+ lesson.numberOfGroup.get(1));
+                holder.txt_class[i * 2].setText(Html.fromHtml(holder.txt_class[i * 2].getText() + " <b>" + lesson.numberOfGroup.get(0) + "</b>"));
+                holder.txt_class[i * 2 + 1].setText(Html.fromHtml(holder.txt_class[i * 2 + 1].getText() + " <b>" + lesson.numberOfGroup.get(1) + "</b>"));
 
             }
         }
 
     }
 
-    void setTypeColor(TextView text, String type){
-        switch (type){
+    void setTypeColor(TextView text, String type) {
+        switch (type) {
             case "лаб. работа":
                 text.setBackgroundColor(context.getResources().getColor(R.color.colorLaboratoryWork));
                 break;
@@ -161,6 +162,7 @@ public class RVAdapterTimeTable extends RecyclerView.Adapter<RVAdapterTimeTable.
                 break;
         }
     }
+
     @Override
     public int getItemCount() {
         return lessons.size();

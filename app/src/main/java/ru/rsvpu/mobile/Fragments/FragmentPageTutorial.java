@@ -33,7 +33,7 @@ public class FragmentPageTutorial extends Fragment {
             R.drawable.ic_tutorial_vk};
 
     static final String[] titles = {
-            "",
+            "Разработчик Митькин Алексей",
             "Приложение в 30 раз быстрее сайта",
             "Расписание доступно без сети",
             "Получайте уведомления о парах на текущий день.\nНу и остальные новости...",

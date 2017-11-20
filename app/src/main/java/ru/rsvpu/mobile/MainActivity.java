@@ -76,13 +76,18 @@ public class MainActivity extends AppCompatActivity {
 
         BottomNavigationView navigationView = findViewById(R.id.bottom_navigation);
 
+        if (savedInstanceState != null) {
+            currentFragment = savedInstanceState.getString("currentFragment");
+        }
+
         if (getIntent().getIntExtra("firstStart", -1) == 1) {
             navigationView.setSelectedItemId(R.id.menu_navigation_setting);
             currentFragment = "four";
             fragmentManager.beginTransaction().add(R.id.main_container, fragments[3], "four").setTransition(transition).commit();
             startService(new Intent(this, SendToServerService.class));
         } else {
-            transaction.add(R.id.main_container, fragments[0], "one").commit();
+            if (savedInstanceState == null)
+                transaction.add(R.id.main_container, fragments[0], "one").commit();
         }
 
         navigationView.setOnNavigationItemSelectedListener(item -> {
@@ -162,6 +167,12 @@ public class MainActivity extends AppCompatActivity {
         PeopleTActivity.getDate(this);
     }
 
+    @Override
+    protected void onSaveInstanceState(Bundle outState) {
+        super.onSaveInstanceState(outState);
+        outState.putString("currentFragment", currentFragment);
+    }
+
     void sendStatisticToFirebase() {
         FirebaseDatabase firebaseDatabase = FirebaseDatabase.getInstance();
         DatabaseReference mReference = firebaseDatabase.getReference();
@@ -188,9 +199,9 @@ public class MainActivity extends AppCompatActivity {
             e.printStackTrace();
         }
 
-        if(helper.needUpdateVk()){
+        if (helper.needUpdateVk()) {
             helper.saveLastUpdateVkDate(System.currentTimeMillis());
-            startService(new Intent(getApplicationContext(),SendToServerService.class));
+            startService(new Intent(getApplicationContext(), SendToServerService.class));
         }
     }
 

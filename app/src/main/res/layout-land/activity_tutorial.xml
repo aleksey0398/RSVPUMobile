@@ -35,7 +35,7 @@
     <ru.rsvpu.mobile.CustomView.PresentationViewPager
         android:id="@+id/activity_viewPager_slide"
         android:layout_width="match_parent"
-        android:layout_height="320dp">
+        android:layout_height="230dp">
 
     </ru.rsvpu.mobile.CustomView.PresentationViewPager>
 

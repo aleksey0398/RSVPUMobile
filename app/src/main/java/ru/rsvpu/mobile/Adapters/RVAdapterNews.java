@@ -34,7 +34,6 @@ public class RVAdapterNews extends RecyclerView.Adapter<RVAdapterNews.newsViewHo
     private Context context;
     private List<ItemNews> newsList = new ArrayList<>();
 
-
     public RVAdapterNews(Context context) {
         this.context = context;
     }

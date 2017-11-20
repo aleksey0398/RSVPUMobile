@@ -1,7 +1,4 @@
 <resources>
     <string name="app_name">RSVPU</string>
     <integer name="com_vk_sdk_AppId">6243629</integer>
-    <string name="title_activity_setting">SettingActivity</string>
-    <string name="title_activity_people_t">PeopleTActivity</string>
-
 </resources>

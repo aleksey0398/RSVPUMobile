@@ -78,6 +78,8 @@ public class FragmentSettings extends Fragment {
     int selectedType = 0, typeForSave = 0;
     private final String LOG_ARGS = "Fragment_Setting";
 
+    private boolean firstStart = false;
+
     public FragmentSettings() {
 
     }
@@ -173,7 +175,9 @@ public class FragmentSettings extends Fragment {
             @Override
             public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
                 selectedType = i;
+
                 new getList().execute();
+
             }
 
             @Override
@@ -185,6 +189,12 @@ public class FragmentSettings extends Fragment {
         setCheckListener();
         setListViewListener();
         return v;
+    }
+
+    @Override
+    public void onSaveInstanceState(Bundle outState) {
+        super.onSaveInstanceState(outState);
+        outState.putBoolean("save", true);
     }
 
     void initView(View v) {
@@ -247,7 +257,7 @@ public class FragmentSettings extends Fragment {
                 TutorialActivity.setAlarmPair(getActivity(), false);
             } else if (!selectedContainer.getAttr().equals("gr")) {
                 Toast.makeText(getActivity(), "Для преподавателей уведомления о следующей паре не выводятся", Toast.LENGTH_SHORT).show();
-                TutorialActivity.setAlarmPair(getActivity(),true);
+                TutorialActivity.setAlarmPair(getActivity(), true);
             }
         };
     }
@@ -372,7 +382,7 @@ public class FragmentSettings extends Fragment {
             urlValid = MyNetwork.checkURL();
             if (network && urlValid) {
                 try {
-                    URL url = new URL(var.url + (selectedType != 0 ? "getAllZaochnoe" : "getAllOchnoe")+MyNetwork.additionForStatistic(getContext()));
+                    URL url = new URL(var.url + (selectedType != 0 ? "getAllZaochnoe" : "getAllOchnoe") + MyNetwork.additionForStatistic(getContext()));
                     urlConnection = (HttpURLConnection) url.openConnection();
                     urlConnection.setRequestMethod("GET");
                     urlConnection.connect();

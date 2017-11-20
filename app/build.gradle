@@ -7,8 +7,8 @@ android {
         applicationId "ru.rsvpu.mobile"
         minSdkVersion 16
         targetSdkVersion 26
-        versionCode 1
-        versionName "1.0 alpha"
+        versionCode 3
+        versionName "0.2.0 alpha"
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
     }
     buildTypes {

@@ -1,10 +1,12 @@
 package ru.rsvpu.mobile.Activity;
 
+import android.annotation.SuppressLint;
 import android.app.AlarmManager;
 import android.app.PendingIntent;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
+import android.os.PersistableBundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
@@ -13,6 +15,7 @@ import android.support.v4.view.PagerAdapter;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
+import android.view.MotionEvent;
 import android.view.View;
 import android.widget.TextView;
 
@@ -21,6 +24,7 @@ import com.vk.sdk.VKAccessToken;
 import com.vk.sdk.VKCallback;
 import com.vk.sdk.VKSdk;
 import com.vk.sdk.api.VKError;
+import com.vk.sdk.util.VKUtil;
 
 import java.util.Calendar;
 
@@ -54,29 +58,33 @@ public class TutorialActivity extends AppCompatActivity {
     private final String LOG_ARGS = "TutorialActivity";
     public static boolean showFirst = false;
 
+
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_tutorial);
         initView();
-        titleTutorial.setAlpha(0f);
-        titleTutorial.setTranslationY(200);
-        titleTutorial.animate().setStartDelay(200).alpha(1f).translationY(0).setDuration(2000).start();
+
+        if (savedInstanceState == null) {
+            titleTutorial.setAlpha(0f);
+            titleTutorial.setTranslationY(200);
+            titleTutorial.animate().setStartDelay(200).alpha(1f).translationY(0).setDuration(2000).start();
 //        vk_btn.setOnClickListener(v -> {
 //            VKSdk.login(this, sMyScope);
 //        });
 
-        new Thread(() -> {
-            try {
-                sleep(3500);
-            } catch (InterruptedException e) {
-                e.printStackTrace();
-            }
-            runOnUiThread(() -> {
+            new Thread(() -> {
+                try {
+                    sleep(3300);
+                } catch (InterruptedException e) {
+                    e.printStackTrace();
+                }
+                runOnUiThread(() -> {
 
-                viewPager.setCurrentItem(1, true);
-            });
-        }).start();
+                    viewPager.setCurrentItem(1, true);
+                });
+            }).start();
+        }
         btn_back.setOnClickListener(v -> {
             viewPager.setDurationScroll(PresentationViewPager.PRESENTATION_MODE_SCROLL_DURATION);
             viewPager.setCurrentItem(viewPager.getCurrentItem() - 1, true);
@@ -87,7 +95,7 @@ public class TutorialActivity extends AppCompatActivity {
             viewPager.setCurrentItem(viewPager.getCurrentItem() + 1, true);
         });
 
-        viewPager.setOnTouchListener((v, event) -> {
+        viewPager.setOnTouchListener((View v, MotionEvent event) -> {
             viewPager.setDurationScroll(PresentationViewPager.DEFAULT_SCROLL_DURATION);
             return false;
         });
@@ -121,6 +129,11 @@ public class TutorialActivity extends AppCompatActivity {
         });
     }
 
+    @Override
+    protected void onSaveInstanceState(Bundle outState) {
+        super.onSaveInstanceState(outState);
+        outState.putBoolean("rotation", true);
+    }
 
     void initView() {
 //        vk_btn = findViewById(R.id.activity_tutorial_vk_btn);
@@ -137,6 +150,9 @@ public class TutorialActivity extends AppCompatActivity {
         indicator.setViewPager(viewPager);
         pagerAdapter.registerDataSetObserver(indicator.getDataSetObserver());
         titleTutorial = findViewById(R.id.activity_tutorial_title);
+
+//        String[] fingerprints = VKUtil.getCertificateFingerprint(this, this.getPackageName());
+//        Log.d(LOG_ARGS,fingerprints[0]);
     }
 
     @Override
