@@ -17,4 +17,5 @@
     <color name="colorLectures">#53C000</color>
     <color name="colorPractice">#E10000</color>
     <color name="colorLaboratoryWork">#00B4BE</color>
+    <color name="colorExam">#d0d027</color>
 </resources>

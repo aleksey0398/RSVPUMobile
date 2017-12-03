@@ -8,6 +8,7 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.FrameLayout;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
@@ -61,6 +62,7 @@ public class RVAdapterTimeTable extends RecyclerView.Adapter<RVAdapterTimeTable.
             holder.txt_date.setTextColor(context.getResources().getColor(android.R.color.white));
         }
 
+        setSeparatorLessons(holder);
 
         holder.lesson1.setVisibility(VISIBLE);
         holder.lesson2.setVisibility(VISIBLE);
@@ -100,10 +102,75 @@ public class RVAdapterTimeTable extends RecyclerView.Adapter<RVAdapterTimeTable.
                 continue;
             }
 
+            if (holder.lesson1.getVisibility() != GONE) {
+
+                ViewGroup.MarginLayoutParams params = (ViewGroup.MarginLayoutParams) holder.frameLayoutTime[0].getLayoutParams();
+                params.setMargins(0, 0, 0, 0);
+                holder.frameLayoutTime[0].requestLayout();
+
+                params = (ViewGroup.MarginLayoutParams) holder.linearLayoutLessons[0].getLayoutParams();
+                params.setMargins(0, 0, 0, 0);
+                holder.linearLayoutLessons[0].requestLayout();
+
+            } else if(holder.lesson2.getVisibility() != GONE){
+                ViewGroup.MarginLayoutParams params = (ViewGroup.MarginLayoutParams) holder.frameLayoutTime[1].getLayoutParams();
+                params.setMargins(0, 0, 0, 0);
+                holder.frameLayoutTime[1].requestLayout();
+
+                params = (ViewGroup.MarginLayoutParams) holder.linearLayoutLessons[1].getLayoutParams();
+                params.setMargins(0, 0, 0, 0);
+                holder.linearLayoutLessons[1].requestLayout();
+
+            } else if(holder.lesson3.getVisibility() != GONE){
+                ViewGroup.MarginLayoutParams params = (ViewGroup.MarginLayoutParams) holder.frameLayoutTime[2].getLayoutParams();
+                params.setMargins(0, 0, 0, 0);
+                holder.frameLayoutTime[2].requestLayout();
+
+                params = (ViewGroup.MarginLayoutParams) holder.linearLayoutLessons[2].getLayoutParams();
+                params.setMargins(0, 0, 0, 0);
+                holder.linearLayoutLessons[2].requestLayout();
+
+            }else if(holder.lesson4.getVisibility() != GONE){
+                ViewGroup.MarginLayoutParams params = (ViewGroup.MarginLayoutParams) holder.frameLayoutTime[3].getLayoutParams();
+                params.setMargins(0, 0, 0, 0);
+                holder.frameLayoutTime[3].requestLayout();
+
+                params = (ViewGroup.MarginLayoutParams) holder.linearLayoutLessons[3].getLayoutParams();
+                params.setMargins(0, 0, 0, 0);
+                holder.linearLayoutLessons[3].requestLayout();
+
+            }else if(holder.lesson5.getVisibility() != GONE){
+                ViewGroup.MarginLayoutParams params = (ViewGroup.MarginLayoutParams) holder.frameLayoutTime[4].getLayoutParams();
+                params.setMargins(0, 0, 0, 0);
+                holder.frameLayoutTime[4].requestLayout();
+
+                params = (ViewGroup.MarginLayoutParams) holder.linearLayoutLessons[4].getLayoutParams();
+                params.setMargins(0, 0, 0, 0);
+                holder.linearLayoutLessons[4].requestLayout();
+
+            } else if(holder.lesson6.getVisibility() != GONE){
+                ViewGroup.MarginLayoutParams params = (ViewGroup.MarginLayoutParams) holder.frameLayoutTime[5].getLayoutParams();
+                params.setMargins(0, 0, 0, 0);
+                holder.frameLayoutTime[5].requestLayout();
+
+                params = (ViewGroup.MarginLayoutParams) holder.linearLayoutLessons[5].getLayoutParams();
+                params.setMargins(0, 0, 0, 0);
+                holder.linearLayoutLessons[5].requestLayout();
+
+            } else if(holder.lesson7.getVisibility() != GONE){
+                ViewGroup.MarginLayoutParams params = (ViewGroup.MarginLayoutParams) holder.frameLayoutTime[6].getLayoutParams();
+                params.setMargins(0, 0, 0, 0);
+                holder.frameLayoutTime[6].requestLayout();
+
+                params = (ViewGroup.MarginLayoutParams) holder.linearLayoutLessons[6].getLayoutParams();
+                params.setMargins(0, 0, 0, 0);
+                holder.linearLayoutLessons[6].requestLayout();
+            }
+
             if (lesson.lessonsName.size() < 2) {
 
                 setTypeColor(holder.txt_type[i * 2], lesson.typeOfLesson.get(0));
-                holder.txt_type[i * 2].setText(lesson.typeOfLesson.get(0));
+                holder.txt_type[i * 2].setText(" " + lesson.typeOfLesson.get(0) + " ");
                 holder.txt_title[i * 2].setText(lesson.lessonsName.get(0));
 
                 String teacherString = "";
@@ -128,8 +195,8 @@ public class RVAdapterTimeTable extends RecyclerView.Adapter<RVAdapterTimeTable.
             } else {
                 setTypeColor(holder.txt_type[i * 2], lesson.typeOfLesson.get(0));
                 setTypeColor(holder.txt_type[i * 2 + 1], lesson.typeOfLesson.get(1));
-                holder.txt_type[i * 2].setText(lesson.typeOfLesson.get(0));
-                holder.txt_type[i * 2 + 1].setText(lesson.typeOfLesson.get(1));
+                holder.txt_type[i * 2].setText(" " + lesson.typeOfLesson.get(0) + " ");
+                holder.txt_type[i * 2 + 1].setText(" " + lesson.typeOfLesson.get(1) + " ");
                 holder.second_linear_layout[i].setVisibility(VISIBLE);
 
                 holder.txt_class[i * 2].setText(lesson.classrooms.get(0).name);
@@ -160,7 +227,75 @@ public class RVAdapterTimeTable extends RecyclerView.Adapter<RVAdapterTimeTable.
             case "лекция":
                 text.setBackgroundColor(context.getResources().getColor(R.color.colorLectures));
                 break;
+            case "экз.":
+                text.setBackgroundColor(context.getResources().getColor(R.color.colorExam));
+                break;
+            case "конс. перед экз.":
+                text.setBackgroundColor(context.getResources().getColor(R.color.colorExam));
+                break;
+            default:
+                text.setBackgroundColor(context.getResources().getColor(R.color.colorLaboratoryWork));
         }
+    }
+
+    void setSeparatorLessons(TimeTableViewHolder holder){
+
+        ViewGroup.MarginLayoutParams params = (ViewGroup.MarginLayoutParams) holder.frameLayoutTime[0].getLayoutParams();
+        params.setMargins(0, 1, 0, 0);
+        holder.frameLayoutTime[0].requestLayout();
+
+        params = (ViewGroup.MarginLayoutParams) holder.frameLayoutTime[1].getLayoutParams();
+        params.setMargins(0, 1, 0, 0);
+        holder.frameLayoutTime[1].requestLayout();
+
+        params = (ViewGroup.MarginLayoutParams) holder.frameLayoutTime[2].getLayoutParams();
+        params.setMargins(0, 1, 0, 0);
+        holder.frameLayoutTime[2].requestLayout();
+
+        params = (ViewGroup.MarginLayoutParams) holder.frameLayoutTime[3].getLayoutParams();
+        params.setMargins(0, 1, 0, 0);
+        holder.frameLayoutTime[3].requestLayout();
+
+        params = (ViewGroup.MarginLayoutParams) holder.frameLayoutTime[4].getLayoutParams();
+        params.setMargins(0, 1, 0, 0);
+        holder.frameLayoutTime[4].requestLayout();
+
+        params = (ViewGroup.MarginLayoutParams) holder.frameLayoutTime[5].getLayoutParams();
+        params.setMargins(0, 1, 0, 0);
+        holder.frameLayoutTime[5].requestLayout();
+
+        params = (ViewGroup.MarginLayoutParams) holder.frameLayoutTime[6].getLayoutParams();
+        params.setMargins(0, 1, 0, 0);
+        holder.frameLayoutTime[6].requestLayout();
+
+        params = (ViewGroup.MarginLayoutParams) holder.linearLayoutLessons[0].getLayoutParams();
+        params.setMargins(0, 1, 0, 0);
+        holder.linearLayoutLessons[0].requestLayout();
+
+        params = (ViewGroup.MarginLayoutParams) holder.linearLayoutLessons[1].getLayoutParams();
+        params.setMargins(0, 1, 0, 0);
+        holder.linearLayoutLessons[1].requestLayout();
+
+        params = (ViewGroup.MarginLayoutParams) holder.linearLayoutLessons[2].getLayoutParams();
+        params.setMargins(0, 1, 0, 0);
+        holder.linearLayoutLessons[2].requestLayout();
+
+        params = (ViewGroup.MarginLayoutParams) holder.linearLayoutLessons[3].getLayoutParams();
+        params.setMargins(0, 1, 0, 0);
+        holder.linearLayoutLessons[3].requestLayout();
+
+        params = (ViewGroup.MarginLayoutParams) holder.linearLayoutLessons[4].getLayoutParams();
+        params.setMargins(0, 1, 0, 0);
+        holder.linearLayoutLessons[4].requestLayout();
+
+        params = (ViewGroup.MarginLayoutParams) holder.linearLayoutLessons[5].getLayoutParams();
+        params.setMargins(0, 1, 0, 0);
+        holder.linearLayoutLessons[5].requestLayout();
+
+        params = (ViewGroup.MarginLayoutParams) holder.linearLayoutLessons[6].getLayoutParams();
+        params.setMargins(0, 1, 0, 0);
+        holder.linearLayoutLessons[6].requestLayout();
+
     }
 
     @Override
@@ -176,13 +311,15 @@ public class RVAdapterTimeTable extends RecyclerView.Adapter<RVAdapterTimeTable.
         private TextView[] txt_teacher = new TextView[14];
         private TextView[] txt_title = new TextView[14];
         private TextView[] txt_time_first = new TextView[7];
-        private LinearLayout second_linear_layout[] = new LinearLayout[7];
+        private LinearLayout second_linear_layout[] = new LinearLayout[7], linearLayoutLessons[] = new LinearLayout[7];
+        private FrameLayout frameLayoutTime[] = new FrameLayout[7];
 
         TimeTableViewHolder(View itemView) {
             super(itemView);
             txt_date = itemView.findViewById(R.id.tt_date);
 
             lesson1 = itemView.findViewById(R.id.lesson1);
+
             txt_type[0] = lesson1.findViewById(R.id.lesson_txt_type);
             txt_type[1] = lesson1.findViewById(R.id.lesson_txt_type2);
             second_linear_layout[0] = lesson1.findViewById(R.id.lesson_second_layout);
@@ -193,6 +330,9 @@ public class RVAdapterTimeTable extends RecyclerView.Adapter<RVAdapterTimeTable.
             txt_title[0] = lesson1.findViewById(R.id.lesson_txt_title);
             txt_title[1] = lesson1.findViewById(R.id.lesson_txt_title2);
             txt_time_first[0] = lesson1.findViewById(R.id.lesson_txt_time_first);
+            linearLayoutLessons[0] = lesson1.findViewById(R.id.lesson_ll_lessons);
+            frameLayoutTime[0] = lesson1.findViewById(R.id.lesson_fl_time);
+
 
             lesson2 = itemView.findViewById(R.id.lesson2);
             txt_type[2] = lesson2.findViewById(R.id.lesson_txt_type);
@@ -205,6 +345,8 @@ public class RVAdapterTimeTable extends RecyclerView.Adapter<RVAdapterTimeTable.
             txt_title[2] = lesson2.findViewById(R.id.lesson_txt_title);
             txt_title[3] = lesson2.findViewById(R.id.lesson_txt_title2);
             txt_time_first[1] = lesson2.findViewById(R.id.lesson_txt_time_first);
+            linearLayoutLessons[1] = lesson2.findViewById(R.id.lesson_ll_lessons);
+            frameLayoutTime[1] = lesson2.findViewById(R.id.lesson_fl_time);
 
             lesson3 = itemView.findViewById(R.id.lesson3);
             txt_type[4] = lesson3.findViewById(R.id.lesson_txt_type);
@@ -217,6 +359,8 @@ public class RVAdapterTimeTable extends RecyclerView.Adapter<RVAdapterTimeTable.
             txt_title[4] = lesson3.findViewById(R.id.lesson_txt_title);
             txt_title[5] = lesson3.findViewById(R.id.lesson_txt_title2);
             txt_time_first[2] = lesson3.findViewById(R.id.lesson_txt_time_first);
+            linearLayoutLessons[2] = lesson3.findViewById(R.id.lesson_ll_lessons);
+            frameLayoutTime[2] = lesson3.findViewById(R.id.lesson_fl_time);
 
             lesson4 = itemView.findViewById(R.id.lesson4);
             txt_type[6] = lesson4.findViewById(R.id.lesson_txt_type);
@@ -229,6 +373,8 @@ public class RVAdapterTimeTable extends RecyclerView.Adapter<RVAdapterTimeTable.
             txt_title[6] = lesson4.findViewById(R.id.lesson_txt_title);
             txt_title[7] = lesson4.findViewById(R.id.lesson_txt_title2);
             txt_time_first[3] = lesson4.findViewById(R.id.lesson_txt_time_first);
+            linearLayoutLessons[3] = lesson4.findViewById(R.id.lesson_ll_lessons);
+            frameLayoutTime[3] = lesson4.findViewById(R.id.lesson_fl_time);
 
             lesson5 = itemView.findViewById(R.id.lesson5);
             txt_type[8] = lesson5.findViewById(R.id.lesson_txt_type);
@@ -241,7 +387,8 @@ public class RVAdapterTimeTable extends RecyclerView.Adapter<RVAdapterTimeTable.
             txt_title[8] = lesson5.findViewById(R.id.lesson_txt_title);
             txt_title[9] = lesson5.findViewById(R.id.lesson_txt_title2);
             txt_time_first[4] = lesson5.findViewById(R.id.lesson_txt_time_first);
-
+            linearLayoutLessons[4] = lesson5.findViewById(R.id.lesson_ll_lessons);
+            frameLayoutTime[4] = lesson5.findViewById(R.id.lesson_fl_time);
 
             lesson6 = itemView.findViewById(R.id.lesson6);
             txt_type[10] = lesson6.findViewById(R.id.lesson_txt_type);
@@ -254,6 +401,8 @@ public class RVAdapterTimeTable extends RecyclerView.Adapter<RVAdapterTimeTable.
             txt_title[10] = lesson6.findViewById(R.id.lesson_txt_title);
             txt_title[11] = lesson6.findViewById(R.id.lesson_txt_title2);
             txt_time_first[5] = lesson6.findViewById(R.id.lesson_txt_time_first);
+            linearLayoutLessons[5] = lesson6.findViewById(R.id.lesson_ll_lessons);
+            frameLayoutTime[5] = lesson6.findViewById(R.id.lesson_fl_time);
 
             lesson7 = itemView.findViewById(R.id.lesson7);
             txt_type[12] = lesson7.findViewById(R.id.lesson_txt_type);
@@ -266,6 +415,10 @@ public class RVAdapterTimeTable extends RecyclerView.Adapter<RVAdapterTimeTable.
             txt_title[12] = lesson7.findViewById(R.id.lesson_txt_title);
             txt_title[13] = lesson7.findViewById(R.id.lesson_txt_title2);
             txt_time_first[6] = lesson7.findViewById(R.id.lesson_txt_time_first);
+            linearLayoutLessons[6] = lesson7.findViewById(R.id.lesson_ll_lessons);
+            frameLayoutTime[6] = lesson7.findViewById(R.id.lesson_fl_time);
+
+
         }
     }
 }

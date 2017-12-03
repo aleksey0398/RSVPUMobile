@@ -2,16 +2,17 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:orientation="horizontal"
-    android:weightSum="0.9"
-    android:background="@android:color/black">
+    android:background="@android:color/black"
+    android:orientation="horizontal">
 
     <FrameLayout
-        android:background="@android:color/white"
-        android:layout_width="match_parent"
+        android:id="@+id/lesson_fl_time"
+        android:layout_width="wrap_content"
         android:layout_height="match_parent"
-        android:layout_weight="0.7"
-        android:layout_marginBottom="1dp"
+        android:layout_marginTop="1dp"
+        android:paddingLeft="10dp"
+        android:paddingRight="10dp"
+        android:background="@android:color/white"
         android:orientation="vertical">
 
         <TextView
@@ -24,20 +25,21 @@
     </FrameLayout>
 
     <LinearLayout
-        android:background="@android:color/white"
+        android:id="@+id/lesson_ll_lessons"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginBottom="1dp"
-        android:layout_weight="0.2"
+        android:layout_marginTop="1dp"
+        android:background="@android:color/white"
         android:orientation="vertical">
 
         <TextView
             android:id="@+id/lesson_txt_type"
-            android:layout_margin="4dp"
-            android:textColor="@android:color/white"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Лекция" />
+            android:layout_margin="4dp"
+            android:background="@color/colorLaboratoryWork"
+            android:text="Лекция"
+            android:textColor="@android:color/white" />
 
         <TextView
             android:id="@+id/lesson_txt_title"
@@ -49,21 +51,22 @@
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="horizontal"
-            android:weightSum="0.9">
+            android:orientation="horizontal">
 
             <ImageView
                 android:id="@+id/lesson_img_teacher"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_weight="0.1"
+                android:layout_marginLeft="7dp"
+                android:layout_marginStart="7dp"
                 android:src="@drawable/ic_teacher" />
 
             <TextView
                 android:id="@+id/lesson_txt_teacher"
-                android:layout_width="wrap_content"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_weight="0.8"
+                android:layout_marginLeft="5dp"
+                android:layout_marginStart="5dp"
                 android:text="Наумов В.В" />
 
         </LinearLayout>
@@ -71,41 +74,44 @@
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="horizontal"
-            android:weightSum="0.9">
+            android:orientation="horizontal">
 
             <ImageView
                 android:id="@+id/lesson_img_class"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_weight="0.1"
+                android:layout_marginLeft="7dp"
+                android:layout_marginStart="7dp"
                 android:src="@drawable/ic_class" />
 
             <TextView
                 android:id="@+id/lesson_txt_class"
-                android:layout_width="wrap_content"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_weight="0.8"
-                android:text="0-213 2 п/г" />
+                android:layout_marginLeft="5dp"
+                android:layout_marginStart="5dp"
+                android:text="0-213 2 п/г"
+                 />
         </LinearLayout>
         <!-- =================================== -->
 
         <LinearLayout
             android:id="@+id/lesson_second_layout"
-            android:visibility="visible"
             android:layout_width="match_parent"
             android:layout_height="0dp"
             android:layout_margin="5dp"
             android:layout_weight="0.2"
-            android:orientation="vertical">
+            android:orientation="vertical"
+            android:visibility="visible">
 
             <TextView
                 android:id="@+id/lesson_txt_type2"
-                android:layout_margin="4dp"
-                android:textColor="@android:color/white"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Лекция" />
+                android:layout_margin="4dp"
+                android:background="@color/colorLaboratoryWork"
+                android:text="Лекция"
+                android:textColor="@android:color/white" />
 
             <TextView
                 android:id="@+id/lesson_txt_title2"
@@ -117,21 +123,22 @@
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:orientation="horizontal"
-                android:weightSum="0.9">
+                android:orientation="horizontal">
 
                 <ImageView
                     android:id="@+id/lesson_img_teacher2"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_weight="0.1"
+                    android:layout_marginLeft="7dp"
+                    android:layout_marginStart="7dp"
                     android:src="@drawable/ic_teacher" />
 
                 <TextView
                     android:id="@+id/lesson_txt_teacher2"
-                    android:layout_width="wrap_content"
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_weight="0.8"
+                    android:layout_marginLeft="5dp"
+                    android:layout_marginStart="5dp"
                     android:text="Наумов В.В" />
 
             </LinearLayout>
@@ -139,21 +146,22 @@
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:orientation="horizontal"
-                android:weightSum="0.9">
+                android:orientation="horizontal">
 
                 <ImageView
                     android:id="@+id/lesson_img_class2"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_weight="0.1"
+                    android:layout_marginLeft="7dp"
+                    android:layout_marginStart="7dp"
                     android:src="@drawable/ic_class" />
 
                 <TextView
                     android:id="@+id/lesson_txt_class2"
-                    android:layout_width="wrap_content"
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_weight="0.8"
+                    android:layout_marginLeft="5dp"
+                    android:layout_marginStart="5dp"
                     android:text="0-213 2 п/г" />
             </LinearLayout>
 

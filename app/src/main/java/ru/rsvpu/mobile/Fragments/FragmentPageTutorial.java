@@ -41,9 +41,7 @@ public class FragmentPageTutorial extends Fragment {
     };
 
     private static final String[] sMyScope = new String[]{
-            VKScope.PHOTOS,
-            VKScope.NOHTTPS,
-            VKScope.DOCS
+
     };
 
     private final String LOG_ARGS = "FragmentPageTutorial";

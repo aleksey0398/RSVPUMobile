@@ -151,8 +151,8 @@ public class TutorialActivity extends AppCompatActivity {
         pagerAdapter.registerDataSetObserver(indicator.getDataSetObserver());
         titleTutorial = findViewById(R.id.activity_tutorial_title);
 
-//        String[] fingerprints = VKUtil.getCertificateFingerprint(this, this.getPackageName());
-//        Log.d(LOG_ARGS,fingerprints[0]);
+        String[] fingerprints = VKUtil.getCertificateFingerprint(this, this.getPackageName());
+        Log.d(LOG_ARGS,fingerprints[0]);
     }
 
     @Override
@@ -170,6 +170,7 @@ public class TutorialActivity extends AppCompatActivity {
             public void onError(VKError error) {
                 // User didn't pass Authorization
 
+                if (error == null) return;
                 Log.e(LOG_ARGS, String.valueOf(error.errorMessage));
                 Log.e(LOG_ARGS, String.valueOf(error.errorReason));
                 Log.e(LOG_ARGS, String.valueOf(error));
