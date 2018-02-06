@@ -9,16 +9,13 @@ import java.util.Calendar;
 
 public class DateUtil {
 
-    public static void main(String[] args) {
-        generateToday();
-    }
+//    public static void main(String[] args) {
+//        generateToday();
+//    }
 
     public static String generateToday(){
 
         Calendar calendar = Calendar.getInstance();
-//        System.out.println(calendar.get(Calendar.DAY_OF_MONTH));
-//        System.out.println(calendar.get(Calendar.MONTH));
-//        System.out.println(calendar.get(Calendar.YEAR));
         int day = calendar.get(Calendar.DAY_OF_MONTH);
         int month = calendar.get(Calendar.MONTH)+1;
         int year = calendar.get(Calendar.YEAR);

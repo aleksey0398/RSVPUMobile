@@ -1,10 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <android.support.design.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    app:layout_behavior="@string/appbar_scrolling_view_behavior"
+    android:layout_marginTop="?actionBarSize"
     tools:context="ru.rsvpu.mobile.Activity.SettingActivity"
     tools:showIn="@layout/activity_setting">
 
@@ -24,6 +23,14 @@
                 android:layout_width="150dp"
                 android:layout_height="150dp"
                 android:layout_gravity="center" />
+
+            <TextView
+                android:text="version"
+                android:gravity="center"
+                android:layout_margin="6dp"
+                android:id="@+id/activity_setting_txt_version"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content" />
 
             <android.support.v7.widget.CardView
                 android:layout_width="match_parent"
@@ -118,7 +125,7 @@
                             android:checked="true"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:layout_gravity="right|center_vertical" />
+                            android:layout_gravity="end|center_vertical" />
                     </android.support.design.widget.CoordinatorLayout>
 
                     <android.support.design.widget.CoordinatorLayout
@@ -138,7 +145,7 @@
                             android:checked="true"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:layout_gravity="right|center_vertical" />
+                            android:layout_gravity="end|center_vertical" />
                     </android.support.design.widget.CoordinatorLayout>
 
                     <android.support.design.widget.CoordinatorLayout
@@ -158,7 +165,7 @@
                             android:checked="true"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:layout_gravity="right|center_vertical" />
+                            android:layout_gravity="end|center_vertical" />
                     </android.support.design.widget.CoordinatorLayout>
 
                 </LinearLayout>

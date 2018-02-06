@@ -7,9 +7,9 @@ import ru.rsvpu.mobile.R;
  *
  */
 
-public class FragmentAds extends FragmentNews {
+public class FragmentTabAds extends FragmentTabNews {
 
-    public FragmentAds(){
+    public FragmentTabAds(){
         color =R.color.ads;
         URL = "http://www.rsvpu.ru/notices/";
     }

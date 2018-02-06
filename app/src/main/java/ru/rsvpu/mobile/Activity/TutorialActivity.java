@@ -80,8 +80,8 @@ public class TutorialActivity extends AppCompatActivity {
                     e.printStackTrace();
                 }
                 runOnUiThread(() -> {
-
-                    viewPager.setCurrentItem(1, true);
+                    if (viewPager.getCurrentItem() == 0)
+                        viewPager.setCurrentItem(1, true);
                 });
             }).start();
         }
@@ -152,7 +152,7 @@ public class TutorialActivity extends AppCompatActivity {
         titleTutorial = findViewById(R.id.activity_tutorial_title);
 
         String[] fingerprints = VKUtil.getCertificateFingerprint(this, this.getPackageName());
-        Log.d(LOG_ARGS,fingerprints[0]);
+        Log.d(LOG_ARGS, fingerprints[0]);
     }
 
     @Override

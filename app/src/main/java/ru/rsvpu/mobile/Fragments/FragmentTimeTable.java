@@ -60,6 +60,13 @@ public class FragmentTimeTable extends Fragment {
 
     }
 
+    public static FragmentTimeTable newInstance() {
+        FragmentTimeTable pageFragment = new FragmentTimeTable();
+        Bundle arguments = new Bundle();
+        pageFragment.setArguments(arguments);
+        return pageFragment;
+    }
+
     public void refreshTimeTable() {
         swipeToRefresh.post(() -> {
             swipeToRefresh.setRefreshing(true);
@@ -181,17 +188,17 @@ public class FragmentTimeTable extends Fragment {
             if (!network) {
                 resultString = new SettingsHelper(getActivity()).getLastSavedTimeTable();
                 if (resultString.equals(SettingsHelper.NO_SAVED_TIME_TABLE)) {
-                    Toast.makeText(getActivity(), "Сохранённого расписания не найдено", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(getContext(), "Сохранённого расписания не найдено", Toast.LENGTH_SHORT).show();
                 } else {
-                    Toast.makeText(getActivity(), "Расписание offline", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(getContext(), "Расписание offline", Toast.LENGTH_SHORT).show();
                     updateTimeTable(resultString);
                 }
             } else {
                 if (!urlValid) {
-                    Toast.makeText(getActivity(), "Сервер недоступен, загружаем последнее сохранённое расписание", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(getContext(), "Сервер недоступен, загружаем последнее сохранённое расписание", Toast.LENGTH_SHORT).show();
                     resultString = new SettingsHelper(getActivity()).getLastSavedTimeTable();
                     if (resultString.equals(SettingsHelper.NO_SAVED_TIME_TABLE)) {
-                        Toast.makeText(getActivity(), "Сохранённого расписания не найдено", Toast.LENGTH_SHORT).show();
+                        Toast.makeText(getContext(), "Сохранённого расписания не найдено", Toast.LENGTH_SHORT).show();
                     } else {
                         updateTimeTable(resultString);
                     }
@@ -217,7 +224,7 @@ public class FragmentTimeTable extends Fragment {
         Type listOfTimeTable = new TypeToken<List<TimeTableOneDay>>() {
         }.getType();
         List<TimeTableOneDay> list = new Gson().fromJson(resultString, listOfTimeTable);
-//                System.out.println(list.size());
+        Log.d(LOG_ARGS,"Size TT list: "+list.size());
         adapter.setList(list);
     }
 

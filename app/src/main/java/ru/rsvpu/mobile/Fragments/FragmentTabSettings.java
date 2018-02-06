@@ -53,10 +53,11 @@ import static android.view.View.GONE;
 import static android.view.View.VISIBLE;
 
 /**
- * Created by aleksej on 12.10.2017.
+ * Created by aleksej
+ * on 12.10.2017.
  */
 
-public class FragmentSettings extends Fragment {
+public class FragmentTabSettings extends Fragment {
 
     Spinner spinner;
     ListView listViewGroup;
@@ -78,11 +79,7 @@ public class FragmentSettings extends Fragment {
     int selectedType = 0, typeForSave = 0;
     private final String LOG_ARGS = "Fragment_Setting";
 
-    private boolean firstStart = false;
-
-    public FragmentSettings() {
-
-    }
+//    private boolean firstStart = false;
 
     @Override
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
@@ -158,7 +155,7 @@ public class FragmentSettings extends Fragment {
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        final View v = inflater.inflate(R.layout.fragment_settings, container, false);
+        final View v = inflater.inflate(R.layout.fragment_tab_settings, container, false);
         setHasOptionsMenu(true);
         initView(v);
 
@@ -245,7 +242,7 @@ public class FragmentSettings extends Fragment {
         fabOnlineListener = v -> {
             SettingsHelper helper = new SettingsHelper(getActivity());
             helper.saveSelectedGroup(selectedContainer, typeForSave);
-            Snackbar.make(v, "Сохранено", Snackbar.LENGTH_SHORT).show();
+//            Snackbar.make(v, "Сохранено", Snackbar.LENGTH_SHORT).show();
             selected.setText(selectedContainer.getName());
             fab.setVisibility(GONE);
             var.changeGroup = true;

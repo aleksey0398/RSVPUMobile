@@ -51,6 +51,7 @@
                 <action android:name="android.intent.action.BOOT_COMPLETED" />
             </intent-filter>
         </receiver>
+
         <receiver
             android:name=".Services.EveningAlarmReceiver"
             android:enabled="true" />
@@ -80,9 +81,8 @@
 
         <activity
             android:name=".Activity.PeopleTActivity"
-
             android:screenOrientation="portrait"
-            android:theme="@style/AppTheme.NoActionBar"></activity>
+            android:theme="@style/AppTheme.NoActionBar"/>
 
         <receiver
             android:name=".Services.PeopleTNotification"

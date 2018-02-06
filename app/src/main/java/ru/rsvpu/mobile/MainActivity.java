@@ -15,21 +15,19 @@ import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 
-import com.google.android.gms.tasks.Task;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.vk.sdk.VKSdk;
 
 import ru.rsvpu.mobile.Activity.PeopleTActivity;
 import ru.rsvpu.mobile.Activity.TutorialActivity;
-import ru.rsvpu.mobile.Fragments.FragmentAds;
-import ru.rsvpu.mobile.Fragments.FragmentNews;
-import ru.rsvpu.mobile.Fragments.FragmentSettings;
-import ru.rsvpu.mobile.Fragments.FragmentTimeTable;
+import ru.rsvpu.mobile.Fragments.FragmentTabAds;
+import ru.rsvpu.mobile.Fragments.FragmentTabNews;
+import ru.rsvpu.mobile.Fragments.FragmentTabSettings;
+import ru.rsvpu.mobile.Fragments.FragmentTabTimeTable;
 import ru.rsvpu.mobile.Services.SendToServerService;
 import ru.rsvpu.mobile.items.Container;
 import ru.rsvpu.mobile.items.DateUtil;
-import ru.rsvpu.mobile.items.ItemNewsPeopleT;
 import ru.rsvpu.mobile.items.SettingsHelper;
 import ru.rsvpu.mobile.items.var;
 
@@ -37,7 +35,7 @@ public class MainActivity extends AppCompatActivity {
 
     private FragmentManager fragmentManager;
     private MenuItem timeTableMenuItem;
-    Fragment fragments[] = {new FragmentTimeTable(), new FragmentNews(), new FragmentAds(), new FragmentSettings()};
+    Fragment fragments[] = {new FragmentTabTimeTable(), new FragmentTabNews(), new FragmentTabAds(), new FragmentTabSettings()};
     String currentFragment = "one";
     int transition = FragmentTransaction.TRANSIT_FRAGMENT_FADE;
     private final String LOG_ARGS = "Main_Activity";
@@ -61,7 +59,6 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         sendStatisticToFirebase();
-
         if (!VKSdk.isLoggedIn()) {
             startActivity(new Intent(this, TutorialActivity.class));
             finish();
@@ -98,8 +95,8 @@ public class MainActivity extends AppCompatActivity {
                     if (fragmentManager.findFragmentByTag("one") != null) {
                         fragmentManager.beginTransaction().show(fragmentManager.findFragmentByTag("one")).setTransition(transition).commit();
                         if (var.changeGroup) {
-                            FragmentTimeTable fragmentTimeTable = (FragmentTimeTable) fragments[0];
-                            fragmentTimeTable.refreshTimeTable();
+                            FragmentTabTimeTable fragmentTimeTable = (FragmentTabTimeTable) fragments[0];
+                            fragmentTimeTable.updateTimeTable();
                         }
                     } else {
                         fragmentManager.beginTransaction().add(R.id.main_container, fragments[0], "one").setTransition(transition).commit();

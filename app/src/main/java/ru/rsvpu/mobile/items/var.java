@@ -9,7 +9,7 @@ public class var {
 
     public static boolean changeGroup = false;
 
-    public static final String url = "http://92.248.221.177:8765/";
+    public static final String url = "http://80.83.242.238:8765/";
 //    public static final String url = "http://192.168.1.50:8765/";
 //    public static final String url = "http://192.168.2.146:8765/";
 

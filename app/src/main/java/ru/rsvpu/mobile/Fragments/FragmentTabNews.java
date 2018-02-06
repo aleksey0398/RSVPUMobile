@@ -11,9 +11,7 @@ import android.support.v4.app.Fragment;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.GridLayoutManager;
-import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.support.v7.widget.StaggeredGridLayoutManager;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -44,7 +42,7 @@ import static java.lang.Thread.sleep;
  * on 12.10.2017.
  */
 
-public class FragmentNews extends Fragment {
+public class FragmentTabNews extends Fragment {
 
     public String URL = "http://www.rsvpu.ru/news/";
 
@@ -56,16 +54,16 @@ public class FragmentNews extends Fragment {
     private View noSignal;
     private RecyclerView rv;
     private FloatingActionButton fabPeopleT;
-    private String LOG_ARGS = "FragmentNews";
+    private String LOG_ARGS = "FragmentTabNews";
 
-    public FragmentNews() {
+    public FragmentTabNews() {
         color = R.color.news;
     }
 
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        final View view = inflater.inflate(R.layout.fragment_news, container, false);
+        final View view = inflater.inflate(R.layout.fragment_tab_news, container, false);
         view.setBackgroundColor(getResources().getColor(color));
         initView(view);
         swipeToRefresh.setOnRefreshListener(() -> new LoadNews().execute());
@@ -211,7 +209,7 @@ public class FragmentNews extends Fragment {
                     newsTime = document.select("dt").select("span");
 
 
-                    String LOG_ARGS = "FragmentNews";
+                    String LOG_ARGS = "FragmentTabNews";
                     Log.d(LOG_ARGS, String.valueOf(newsTitle.size()));
 
                     arrayItemNews = new ItemNews[newsTime.size()];

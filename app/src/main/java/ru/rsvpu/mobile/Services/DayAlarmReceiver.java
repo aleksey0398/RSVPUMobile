@@ -152,6 +152,12 @@ public class DayAlarmReceiver extends BroadcastReceiver {
     }
 
     private String generateTitle() {
+
+        //13.01.2018 fix null pointer exception
+        if(nextLesson.lessonsName == null){
+            return null;
+        }
+
         String titleForMessage;
         if (nextLesson.lessonsName.size() == 1) {
             if (nextLesson.lessonsName.get(0).equals("-")) {

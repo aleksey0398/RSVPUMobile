@@ -51,6 +51,7 @@ public class EveningAlarmReceiver extends BroadcastReceiver {
     static int id = 0;
     private static final String NOTIFICATION_CHANNEL_ID = "my_notification_channel";
     String tomorrow = "";
+    final String ERROR_GENERATE_NOTIFICATION_TITLE = "title_error";
 
     @Override
     public void onReceive(Context context, Intent intent) {
@@ -70,6 +71,7 @@ public class EveningAlarmReceiver extends BroadcastReceiver {
                 title = "Чтобы получать уведомления о занятии на следущий день, зайдите в настройки и выберите группу, преподавателя или аудиторию";
             } else {
                 title = new GetTimeTable().execute(context).get();
+                title = ERROR_GENERATE_NOTIFICATION_TITLE.equals(title)?null:title;
             }
         } catch (InterruptedException e) {
             e.printStackTrace();
@@ -162,7 +164,12 @@ public class EveningAlarmReceiver extends BroadcastReceiver {
                 }
             }
 
-            return generateTitleNotification(list);
+            try {
+                return generateTitleNotification(list);
+            } catch (Exception e) {
+                e.printStackTrace();
+                return ERROR_GENERATE_NOTIFICATION_TITLE;
+            }
         }
 
         @Override
@@ -171,7 +178,7 @@ public class EveningAlarmReceiver extends BroadcastReceiver {
         }
     }
 
-    String generateTitleNotification(List<TimeTableOneDay> timeTableOneDays) {
+    String generateTitleNotification(List<TimeTableOneDay> timeTableOneDays) throws Exception {
 
         if (timeTableOneDays == null) {
             return null;
@@ -183,7 +190,6 @@ public class EveningAlarmReceiver extends BroadcastReceiver {
         for (TimeTableOneDay oneDay : timeTableOneDays) {
             if (oneDay.date.equals(DateUtil.generateToday())) {
                 nextOneDay = timeTableOneDays.get(++i);
-
                 break;
             }
             i++;
@@ -220,10 +226,10 @@ public class EveningAlarmReceiver extends BroadcastReceiver {
                 else
                     title += "\n";
             } else {
-                title += oneLesson.timeStart + ":";
-                title += currentPair + "." + oneLesson.lessonsName.get(0) + " "+oneLesson.classrooms.get(0).name+
+                title += oneLesson.timeStart+" ";
+                title += currentPair + "." + oneLesson.lessonsName.get(0) + " "+oneLesson.classrooms.get(0).name+" "+
                         oneLesson.numberOfGroup.get(0)+"\n";
-                title += "\t\t\t" + oneLesson.lessonsName.get(1)+" "+ oneLesson.classrooms.get(0).name +
+                title += "\t\t\t\t" + oneLesson.lessonsName.get(1)+" "+ oneLesson.classrooms.get(0).name +" "+
                        oneLesson.numberOfGroup.get(1) + "\n";
             }
         }

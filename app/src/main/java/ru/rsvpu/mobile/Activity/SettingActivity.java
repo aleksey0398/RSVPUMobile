@@ -1,33 +1,20 @@
 package ru.rsvpu.mobile.Activity;
 
-import android.content.DialogInterface;
+import android.content.pm.PackageInfo;
+import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.os.Bundle;
-import android.support.design.widget.Snackbar;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
-import android.util.Log;
 import android.view.MenuItem;
 import android.widget.Button;
-import android.widget.CompoundButton;
 import android.widget.ImageView;
 import android.widget.Switch;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.vk.sdk.VKSdk;
-import com.vk.sdk.api.VKApi;
-import com.vk.sdk.api.VKApiConst;
-import com.vk.sdk.api.VKError;
-import com.vk.sdk.api.VKParameters;
-import com.vk.sdk.api.VKRequest;
-import com.vk.sdk.api.VKResponse;
-
-import org.json.JSONArray;
-import org.json.JSONException;
-import org.json.JSONObject;
 
 import java.io.IOException;
 import java.net.MalformedURLException;
@@ -35,7 +22,6 @@ import java.net.URL;
 
 import ru.rsvpu.mobile.R;
 import ru.rsvpu.mobile.items.SettingsHelper;
-import ru.rsvpu.mobile.items.TabletHelper;
 
 public class SettingActivity extends AppCompatActivity {
 
@@ -43,17 +29,23 @@ public class SettingActivity extends AppCompatActivity {
     Switch switchEvening, switchDay, switchPeople;
     Button buttonExit;
     Toolbar toolbar;
-    TextView textName, textSurname;
+    TextView textName, textSurname, textVersion;
 
-    private String LOG_ARGS = "Setting Activity";
-
+//    private String LOG_ARGS = "Setting Activity";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-//        setTheme();
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_setting);
         initView();
+
+        try {
+            PackageInfo info = getPackageManager().getPackageInfo(getPackageName(),0);
+            textVersion.setText("Версия: "+info.versionName);
+        } catch (PackageManager.NameNotFoundException e) {
+            textVersion.setText("Ошибка определения версии");
+            e.printStackTrace();
+        }
 
         String[] vkDate = new SettingsHelper(getApplicationContext()).getVkData();
         if (!vkDate[0].equals("-")) {
@@ -146,15 +138,12 @@ public class SettingActivity extends AppCompatActivity {
         buttonExit = findViewById(R.id.activity_setting_button_exit);
         textName = findViewById(R.id.activity_setting_text_name);
         textSurname = findViewById(R.id.activity_setting_text_surname);
+        textVersion = findViewById(R.id.activity_setting_txt_version);
 
         SettingsHelper settings = new SettingsHelper(getApplicationContext());
         switchDay.setChecked(settings.getCheckedDay());
         switchEvening.setChecked(settings.getCheckedEvening());
         switchPeople.setChecked(settings.getCheckedPeople());
     }
-    void setTheme(){
-        if(TabletHelper.isTablet(getApplicationContext())){
-            setTheme(R.style.AppTheme_Dialog);
-        }
-    }
+
 }
