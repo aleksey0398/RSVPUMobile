@@ -81,7 +81,7 @@ public class GetTimeTableForNotif extends AsyncTask<Context, Void, List<TimeTabl
     }
 
     private String generateRequest(Context context) {
-        String url = var.url;
+        String url = Var.url;
 
         SettingsHelper helper = new SettingsHelper(context);
         Container saved_container = helper.getSettings();

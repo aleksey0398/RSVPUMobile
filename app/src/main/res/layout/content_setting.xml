@@ -4,7 +4,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:layout_marginTop="?actionBarSize"
-    tools:context="ru.rsvpu.mobile.Activity.SettingActivity"
+    tools:context="ru.rsvpu.mobile.activities.SettingActivity"
     tools:showIn="@layout/activity_setting">
 
     <ScrollView

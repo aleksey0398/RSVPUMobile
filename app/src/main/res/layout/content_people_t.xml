@@ -5,13 +5,13 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     app:layout_behavior="@string/appbar_scrolling_view_behavior"
-    tools:context="ru.rsvpu.mobile.Activity.PeopleTActivity"
+    tools:context="ru.rsvpu.mobile.activities.PeopleTActivity"
     tools:showIn="@layout/activity_people_t">
 
-    <ru.rsvpu.mobile.CustomView.PresentationViewPager
+    <ru.rsvpu.mobile.views.PresentationViewPager
         android:id="@+id/activity_people_viewpager"
         android:layout_width="match_parent"
         android:layout_height="match_parent">
-    </ru.rsvpu.mobile.CustomView.PresentationViewPager>
+    </ru.rsvpu.mobile.views.PresentationViewPager>
 
 </android.support.design.widget.CoordinatorLayout>

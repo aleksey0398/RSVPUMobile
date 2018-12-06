@@ -25,27 +25,27 @@
             </intent-filter>
         </activity>
         <activity
-            android:name=".Activity.NewsActivity"
+            android:name=".activities.NewsActivity"
             android:theme="@style/AppTheme" />
         <activity
             android:name="com.vk.sdk.VKServiceActivity"
             android:label="ServiceActivity"
             android:theme="@style/VK.Transparent" />
         <activity
-            android:name=".Activity.TutorialActivity"
+            android:name=".activities.TutorialActivity"
             android:screenOrientation="portrait" />
         <activity
-            android:name=".Activity.SearchActivity"
+            android:name=".activities.SearchActivity"
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme" />
 
         <service
-            android:name=".Services.SendToServerService"
+            android:name=".services.SendToServerService"
             android:enabled="true"
             android:exported="true" />
 
         <receiver
-            android:name=".Services.DeviceStartBroadcast"
+            android:name=".services.DeviceStartBroadcast"
             android:enabled="true">
             <intent-filter>
                 <action android:name="android.intent.action.BOOT_COMPLETED" />
@@ -53,39 +53,39 @@
         </receiver>
 
         <receiver
-            android:name=".Services.EveningAlarmReceiver"
+            android:name=".services.EveningAlarmReceiver"
             android:enabled="true" />
 
         <!-- +=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+= -->
         <receiver
-            android:name=".Services.DayAlarmReceiver"
+            android:name=".services.DayAlarmReceiver"
             android:enabled="true" />
         <receiver
-            android:name=".Services.DayAlarmReceiver2"
+            android:name=".services.DayAlarmReceiver2"
             android:enabled="true" />
         <receiver
-            android:name=".Services.DayAlarmReceiver3"
+            android:name=".services.DayAlarmReceiver3"
             android:enabled="true" />
         <receiver
-            android:name=".Services.DayAlarmReceiver4"
+            android:name=".services.DayAlarmReceiver4"
             android:enabled="true" />
         <receiver
-            android:name=".Services.DayAlarmReceiver5"
+            android:name=".services.DayAlarmReceiver5"
             android:enabled="true" />
 
         <activity
-            android:name=".Activity.SettingActivity"
+            android:name=".activities.SettingActivity"
 
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme.NoActionBar" />
 
         <activity
-            android:name=".Activity.PeopleTActivity"
+            android:name=".activities.PeopleTActivity"
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme.NoActionBar"/>
 
         <receiver
-            android:name=".Services.PeopleTNotification"
+            android:name=".services.PeopleTNotification"
             android:enabled="true" />
     </application>
 

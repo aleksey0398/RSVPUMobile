@@ -6,7 +6,7 @@
     android:layout_height="match_parent"
 
     app:layout_behavior="@string/appbar_scrolling_view_behavior"
-    tools:context="ru.rsvpu.mobile.Activity.NewsActivity"
+    tools:context="ru.rsvpu.mobile.activities.NewsActivity"
     tools:showIn="@layout/activity_news">
     <LinearLayout
         android:animateLayoutChanges="true"

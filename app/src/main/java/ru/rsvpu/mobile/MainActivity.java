@@ -19,17 +19,17 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.vk.sdk.VKSdk;
 
-import ru.rsvpu.mobile.Activity.PeopleTActivity;
-import ru.rsvpu.mobile.Activity.TutorialActivity;
-import ru.rsvpu.mobile.Fragments.FragmentTabAds;
-import ru.rsvpu.mobile.Fragments.FragmentTabNews;
-import ru.rsvpu.mobile.Fragments.FragmentTabSettings;
-import ru.rsvpu.mobile.Fragments.FragmentTabTimeTable;
-import ru.rsvpu.mobile.Services.SendToServerService;
+import ru.rsvpu.mobile.activities.PeopleTActivity;
+import ru.rsvpu.mobile.activities.TutorialActivity;
+import ru.rsvpu.mobile.fragments.FragmentTabAds;
+import ru.rsvpu.mobile.fragments.FragmentTabNews;
+import ru.rsvpu.mobile.fragments.FragmentTabSettings;
+import ru.rsvpu.mobile.fragments.FragmentTabTimeTable;
+import ru.rsvpu.mobile.services.SendToServerService;
 import ru.rsvpu.mobile.items.Container;
 import ru.rsvpu.mobile.items.DateUtil;
 import ru.rsvpu.mobile.items.SettingsHelper;
-import ru.rsvpu.mobile.items.var;
+import ru.rsvpu.mobile.items.Var;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -94,7 +94,7 @@ public class MainActivity extends AppCompatActivity {
 
                     if (fragmentManager.findFragmentByTag("one") != null) {
                         fragmentManager.beginTransaction().show(fragmentManager.findFragmentByTag("one")).setTransition(transition).commit();
-                        if (var.changeGroup) {
+                        if (Var.changeGroup) {
                             FragmentTabTimeTable fragmentTimeTable = (FragmentTabTimeTable) fragments[0];
                             fragmentTimeTable.updateTimeTable();
                         }
